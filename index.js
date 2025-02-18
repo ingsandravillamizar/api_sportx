@@ -17,24 +17,8 @@ const app = express();
 app.use('/api_sportx', express.static('public'));
 
 /*** Habilitar CORS para todas las rutas   */
-// app.use(cors()); 
-const allowedOrigins = ['https://saberinnovar.com', 'http://localhost:8100'];
+app.use(cors()); 
 
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
-    // Permitir solicitudes preflight OPTIONS
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    
-    next();
-});
 
 // Habilitar express.json para parsear JSON
 /*** Conexión a la base de datos y eliminación de índices duplicados  */
