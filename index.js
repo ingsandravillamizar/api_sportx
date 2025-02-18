@@ -17,7 +17,8 @@ const app = express();
 app.use('/api_sportx', express.static('public'));
 
 /*** Habilitar CORS para todas las rutas   */
-app.use(cors());  
+// app.use(cors()); 
+app.use(cors({ origin: 'https://saberinnovar.com' })); 
 
 // Habilitar express.json para parsear JSON
 /*** Conexión a la base de datos y eliminación de índices duplicados  */
