@@ -14,6 +14,8 @@ import authRoutes from './auth/routes/authRoutes.js';
 /*** Crear app   */
 const app = express();
 
+app.use('/api_sportx', express.static('public'));
+
 /*** Habilitar CORS para todas las rutas   */
 app.use(cors());  
 
@@ -33,8 +35,8 @@ try {
 }
 
 /*** Rutas  */
-app.use('/users', userRoutes);
-app.use('/auth', authRoutes);
+app.use('/api_sportx/users', userRoutes);
+app.use('/api_sportx/auth', authRoutes);
 
 
 /***
@@ -48,6 +50,6 @@ app.listen(port, () => {
 /***
  * Ruta principal
  */
-app.get('/', (req, res) => {
-    res.send("Hola mundo desde Silicon Valey");
+app.get('/api_sportx', (req, res) => {
+    res.send("Hola sportx te encuentras ON");
 });
