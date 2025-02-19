@@ -56,7 +56,7 @@ const updateCategory = async (req, res) => {
         const { id } = req.params
 
         const body = req.body
-        //console.log('Banco', id)
+
 
         const response = await category.update(body, {
             where: { id }
@@ -68,7 +68,7 @@ const updateCategory = async (req, res) => {
             })
         }
 
-        const updateRegistro = await identificationType.findByPk(id);
+        const updateRegistro = await category.findByPk(id);
 
         res.status(200).json({
             message:  ` ${entity} actualizado correctamente `  ,
