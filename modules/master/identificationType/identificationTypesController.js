@@ -49,27 +49,6 @@ const createIdentificationType = async (req, res) => {
     }
 }
 
-const deleteIdentificationType = async(req, res) =>{
-    try {
-        const { id } = req.params
-        const response = await identificationType.update({state: false}, {
-            where: {id, state: true}
-        })
-
-        if(response === 0) {
-            return res.status(404).json({
-                message: `${entity} , no encontrado(a) y/o inactivo(a)` 
-            })
-        }
-
-        res.status(200).json({
-            message: `${entity} , eliminada con exito` 
-        })
-    } catch (error) {
-        handleHttpError(res, `No se pudo eliminar ${entity} `   )
-        console.error(error)
-    }
-}
 
 const updateIdentificationType = async (req, res) => {
     try {
@@ -96,6 +75,29 @@ const updateIdentificationType = async (req, res) => {
         }); 
     } catch (error) {
         handleHttpError(res,  `No se pudo actuaizar ${entity} `)
+        console.error(error)
+    }
+}
+
+
+const deleteIdentificationType = async(req, res) =>{
+    try {
+        const { id } = req.params
+        const response = await identificationType.update({state: false}, {
+            where: {id, state: true}
+        })
+
+        if(response === 0) {
+            return res.status(404).json({
+                message: `${entity} , no encontrado(a) y/o inactivo(a)` 
+            })
+        }
+
+        res.status(200).json({
+            message: `${entity} , eliminada con exito` 
+        })
+    } catch (error) {
+        handleHttpError(res, `No se pudo eliminar ${entity} `   )
         console.error(error)
     }
 }
