@@ -75,7 +75,7 @@ const updateCategory = async (req, res) => {
             data: updateRegistro
         }); 
     } catch (error) {
-        handleHttpError(res,  `No se pudo actuaizar ${entity} `)
+        handleHttpError(res,  `No se pudo actualizar ${entity} `)
         console.error(error)
     }
 }
