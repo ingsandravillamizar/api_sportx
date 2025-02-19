@@ -10,7 +10,7 @@ import authRoutes from './auth/routes/authRoutes.js';
 
 
 /***  Rutas Maestros del sistema */
-import identificationTypesRoutes from './modules/master/identificationTypes/identificationTypesRoutes';
+import identificationTypesRoutes from './modules/master/identificationTypes/identificationTypesRoutes.js';
 
 
 
