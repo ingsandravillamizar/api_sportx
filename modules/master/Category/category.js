@@ -7,6 +7,10 @@ const category = db.define('categories', {
         primaryKey: true,
         autoIncrement: true
     },
+    code: {
+        type: DataTypes.STRING(2),
+        allowNull: false
+    },
 
     name: {
         type: DataTypes.STRING(100),
