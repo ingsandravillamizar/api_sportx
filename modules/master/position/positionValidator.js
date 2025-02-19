@@ -1,7 +1,7 @@
 import { body, check, validationResult } from "express-validator";
 
 const validateCreatePosition = [
-    
+    body("positionCategoryId").exists().withMessage("La categoría es obligatoria").isInt().withMessage("Debe ser un número entero"),
     body('code').exists().notEmpty().isLength({min: 2, max: 4}),
     body('name').exists().notEmpty().isLength({min: 4, max: 30}),
     body('description').exists().notEmpty().isLength({min: 0, max: 150}),
