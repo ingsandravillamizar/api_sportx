@@ -8,7 +8,7 @@ const position = db.define('positions', {
         autoIncrement: true
     },
     code: {
-        type: DataTypes.STRING(2),
+        type: DataTypes.STRING(4),
         allowNull: false
     },
 
