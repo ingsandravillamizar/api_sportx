@@ -1,16 +1,13 @@
 import { DataTypes } from "sequelize";
 import db from "../../../config/db.js";
 
-const category = db.define('identificationTypes', {
+const category = db.define('categories', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    code: {
-        type: DataTypes.STRING(5),
-        allowNull: false
-    },
+
     name: {
         type: DataTypes.STRING(100),
         allowNull: false
@@ -38,4 +35,4 @@ const category = db.define('identificationTypes', {
     freezeTableName: true // Evita que Sequelize pluralice el nombre de la tabla
 });
 
-export default identificationType;
+export default category;

@@ -10,8 +10,8 @@ import authRoutes from './auth/routes/authRoutes.js';
 
 
 /***  Rutas Maestros del sistema */
-import identificationTypesRoutes from './modules/master/identificationType/identificationTypesRoutes.js';
-
+import identificationTypeRoutes from './modules/master/identificationType/identificationTypesRoutes.js';
+import categoryRoutes from './modules/master/category/categoryRoutes.js';
 
 
 /*** Crear app   */
@@ -41,7 +41,8 @@ try {
 /*** Rutas  */
 app.use('/api_sportx/users', userRoutes);
 app.use('/api_sportx/auth', authRoutes);
-app.use('/api_sportx/identificationtypes', identificationTypesRoutes);
+app.use('/api_sportx/identificationtypes', identificationTypeRoutes);
+app.use('/api_sportx/categories', categoryRoutes);
 
 
 /***
