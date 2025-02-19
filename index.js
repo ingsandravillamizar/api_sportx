@@ -12,7 +12,7 @@ import authRoutes from './auth/routes/authRoutes.js';
 /***  Rutas Maestros del sistema */
 import identificationTypeRoutes from './modules/master/identificationType/identificationTypesRoutes.js';
 import categoryRoutes from './modules/master/Category/categoryRoutes.js';
-
+import clubRoutes from './modules/master/club/clubRoutes.js';
 
 /*** Crear app   */
 const app = express();
@@ -43,6 +43,8 @@ app.use('/api_sportx/users', userRoutes);
 app.use('/api_sportx/auth', authRoutes);
 app.use('/api_sportx/identificationtypes', identificationTypeRoutes);
 app.use('/api_sportx/categories', categoryRoutes);
+app.use('/api_sportx/clubes', clubRoutes);
+
 
 // hola
 /***
