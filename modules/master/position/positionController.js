@@ -7,7 +7,7 @@ const entity = "position"
 
 const getPositions = async (req, res) =>{
     try {
-        const registros = await positionCategory.findAll({
+        const registros = await position.findAll({
             where: {state: true}
         });
         res.json(registros)
