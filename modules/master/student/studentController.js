@@ -1,12 +1,13 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import {identificationType}  from "../masterRelations.js";
+import { student } from "../masterRelations.js";
 
-const entity = "identificationType"
 
-const getIdentificationTypes = async (req, res) =>{
+const entity = "student"
+
+const getStudents = async (req, res) =>{
     try {
-        const registros = await identificationType.findAll({
+        const registros = await student.findAll({
             where: {state: true}
         });
         res.json(registros)
@@ -15,11 +16,11 @@ const getIdentificationTypes = async (req, res) =>{
     }
 }
 
-const getIdentificationType = async(req, res) => {
+const getStudent = async(req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await identificationType.findOne({
+        const data = await student.findOne({
             where: {
                 id: id,
                 state: true
@@ -38,10 +39,10 @@ const getIdentificationType = async(req, res) => {
     }
 }
 
-const createIdentificationType = async (req, res) => {
+const createStudent = async (req, res) => {
     try {
         const body = matchedData(req)
-        const response = await identificationType.create(body)
+        const response = await student.create(body)
         res.send(response)
     } catch (error) {
         console.log(error)
@@ -50,14 +51,14 @@ const createIdentificationType = async (req, res) => {
 }
 
 
-const updateIdentificationType = async (req, res) => {
+const updateStudent = async (req, res) => {
     try {
         const { id } = req.params
 
         const body = req.body
-        //console.log('Banco', id)
 
-        const response = await identificationType.update(body, {
+
+        const response = await student.update(body, {
             where: { id }
         })
 
@@ -67,7 +68,7 @@ const updateIdentificationType = async (req, res) => {
             })
         }
 
-        const updateRegistro = await identificationType.findByPk(id);
+        const updateRegistro = await student.findByPk(id);
 
         res.status(200).json({
             message:  ` ${entity} actualizado correctamente `  ,
@@ -80,10 +81,10 @@ const updateIdentificationType = async (req, res) => {
 }
 
 
-const deleteIdentificationType = async(req, res) =>{
+const deleteStudent = async(req, res) =>{
     try {
         const { id } = req.params
-        const response = await identificationType.update({state: false}, {
+        const response = await student.update({state: false}, {
             where: {id, state: true}
         })
 
@@ -103,9 +104,9 @@ const deleteIdentificationType = async(req, res) =>{
 }
 
 export{
-    getIdentificationTypes,
-    getIdentificationType,
-    createIdentificationType,
-    deleteIdentificationType,
-    updateIdentificationType
+    getStudents,
+    getStudent,
+    createStudent,
+    deleteStudent,
+    updateStudent
 }

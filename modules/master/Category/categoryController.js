@@ -1,6 +1,6 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import category from "./category.js";
+import { category}  from "../masterRelations.js";
 
 
 const entity = "category"
