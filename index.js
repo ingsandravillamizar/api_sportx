@@ -11,7 +11,7 @@ import authRoutes from './auth/routes/authRoutes.js';
 
 /***  Rutas Maestros del sistema */
 import identificationTypeRoutes from './modules/master/identificationType/identificationTypesRoutes.js';
-import categoryRoutes from './modules/master/category/categoryRoutes.js';
+import categoryRoutes from './modules/master/Category/categoryRoutes.js';
 
 
 /*** Crear app   */

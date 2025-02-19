@@ -13,4 +13,6 @@ router.put('/:id', apiAuth,validateGetCategory,  updateCategory)
 router.delete('/delete/:id',  apiAuth, deleteCategory)
 
 
+// hola
+
 export default router
