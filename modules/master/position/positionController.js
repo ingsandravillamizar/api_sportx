@@ -1,13 +1,13 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import position from "../masterRelations.js";
+import { position } from "../masterRelations.js";
 
 
 const entity = "position"
 
 const getPositions = async (req, res) =>{
     try {
-        const registros = await position.findAll({
+        const registros = await positionCategory.findAll({
             where: {state: true}
         });
         res.json(registros)
@@ -104,7 +104,7 @@ const deletePosition = async(req, res) =>{
 }
 
 export{
-    getCategories,
+    getPositions,
     getPosition,
     createPosition,
     deletePosition,

@@ -1,7 +1,6 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import positionCategory from "../masterRelations.js";
-
+import { positionCategory } from "../masterRelations.js";
 
 const entity = "positionCategory"
 

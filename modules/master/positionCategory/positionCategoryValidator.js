@@ -1,6 +1,6 @@
 import { body, check, validationResult } from "express-validator";
 
-const validateCreatetPositionCategory = [
+const validateCreatePositionCategory = [
     body('name').exists().notEmpty().isLength({min: 4, max: 30}),
     body('description').exists().notEmpty().isLength({min: 0, max: 150}),
     body('user').optional().isString().withMessage('El usuario debe ser una cadena de texto'),
@@ -18,7 +18,7 @@ const validateCreatetPositionCategory = [
     }
 ];
 
-const validateGettPositionCategory = [
+const validateGetPositionCategory = [
     check('id').exists().notEmpty(),
 
     (req, res, next) =>{
@@ -33,6 +33,6 @@ const validateGettPositionCategory = [
 ]
 
 export {
-    validateCreatetPositionCategory,
-    validateGettPositionCategory
+    validateCreatePositionCategory,
+    validateGetPositionCategory
 };

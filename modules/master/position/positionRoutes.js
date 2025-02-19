@@ -1,5 +1,5 @@
 import express from 'express';import { apiAuth } from '../../../auth/middleware/apiauth.js';
-import { createPosition, deletePosition, updatePosition, getPositions, getPosition } from './positonController.js';
+import { createPosition, deletePosition, updatePosition, getPositions, getPosition } from './positionController.js';
 import { validateCreatePosition, validateGetPosition } from './positionValidator.js';
 
 

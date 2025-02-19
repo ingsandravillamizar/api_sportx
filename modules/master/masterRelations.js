@@ -1,5 +1,5 @@
-import position from "./position/position";
-import positionCategory from "./positionCategory/positionCategory";
+import position from "./position/position.js";
+import positionCategory from "./positionCategory/positionCategory.js";
 
 
 
