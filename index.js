@@ -44,7 +44,7 @@ app.use('/api_sportx/auth', authRoutes);
 app.use('/api_sportx/identificationtypes', identificationTypeRoutes);
 app.use('/api_sportx/categories', categoryRoutes);
 
-
+// hola
 /***
  * Configurar puerto y levantar servidor
  */  
