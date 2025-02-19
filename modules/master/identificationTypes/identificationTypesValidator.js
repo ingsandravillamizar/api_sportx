@@ -1,7 +1,7 @@
 import { body, check, validationResult } from "express-validator";
 
 const validateCreateidentificationType = [
-    body('code').exists().notEmpty().isLength({min: 3, max: 5}),
+    body('code').exists().notEmpty().isLength({min: 2, max: 4}),
     body('name').exists().notEmpty().isLength({min: 5, max: 30}),
     body('description').exists().notEmpty().isLength({min: 0, max: 150}),
     body('user').optional().isString().withMessage('El usuario debe ser una cadena de texto'),
