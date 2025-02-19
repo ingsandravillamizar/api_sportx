@@ -13,6 +13,8 @@ import authRoutes from './auth/routes/authRoutes.js';
 import identificationTypeRoutes from './modules/master/identificationType/identificationTypesRoutes.js';
 import categoryRoutes from './modules/master/Category/categoryRoutes.js';
 import clubRoutes from './modules/master/club/clubRoutes.js';
+import positionCategoryRoutes  from './modules/master/positionCategory/positionCategoryRoutes.js'
+import positionRoutes from './modules/master/position/positionRoutes.js'
 
 /*** Crear app   */
 const app = express();
@@ -44,7 +46,9 @@ app.use('/api_sportx/auth', authRoutes);
 app.use('/api_sportx/identificationtypes', identificationTypeRoutes);
 app.use('/api_sportx/categories', categoryRoutes);
 app.use('/api_sportx/clubes', clubRoutes);
-
+app.use('/api_sportx/clubes', clubRoutes);
+app.use('/api_sportx/positioncategories', positionCategoryRoutes);
+app.use('/api_sportx/positions', positionRoutes);
 
 // hola
 /***
