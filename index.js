@@ -9,6 +9,9 @@ import userRoutes from './auth/routes/userRoutes.js';
 import authRoutes from './auth/routes/authRoutes.js';
 
 
+/***  Rutas Maestros del sistema */
+import identificationTypesRoutes from './modules/master/identificationTypes/identificationTypesRoutes';
+
 
 
 /*** Crear app   */
@@ -38,6 +41,7 @@ try {
 /*** Rutas  */
 app.use('/api_sportx/users', userRoutes);
 app.use('/api_sportx/auth', authRoutes);
+app.use('/api_sportx/identificationtypes', identificationTypesRoutes);
 
 
 /***
