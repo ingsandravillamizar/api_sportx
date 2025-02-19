@@ -1,5 +1,5 @@
 import express from 'express';import { apiAuth } from '../../../auth/middleware/apiauth.js';
-import { createCategory, deleteCategory, updateCategory, getCategories, getCategory, } from './categoryController.js';
+import { createCategory, deleteCategory, updateCategory, getCategories, getCategory } from './categoryController.js';
 import { validateCreateCategory, validateGetCategory } from './categoryValidator.js';
 
 
