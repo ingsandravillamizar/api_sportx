@@ -12,6 +12,11 @@ const category = db.define('categories', {
         allowNull: false
     },
 
+    born: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+
     name: {
         type: DataTypes.STRING(100),
         allowNull: false
@@ -41,4 +46,3 @@ const category = db.define('categories', {
 
 export default category;
 
-// hola
