@@ -8,6 +8,8 @@ const validateCreateCategory = [
     body('userMod').optional().isString().withMessage('El usuarioMod debe ser una cadena de texto'),
 
 
+    // hola
+
     (req, res, next) =>{
         try {
             validationResult(req).throw()
