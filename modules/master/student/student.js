@@ -62,15 +62,15 @@ const student = db.define('students', {
         allowNull: true
     },
     jerseyNumber: {
-        type: DataTypes.STRING(10),
-        allowNull: false
+        type: DataTypes.STRING(3),
+        allowNull: true
     },
     jerseyName: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(15),
         allowNull: false
     },
     jerseySize: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(3),
         allowNull: false
     },
     medicalInsurance: {

@@ -102,6 +102,19 @@ const validateCreateStudent = [
         .isString().withMessage("Debe ser una cadena de texto")
         .isLength({ max: 255 }).withMessage("Debe tener máximo 255 caracteres"),
 
+
+    //JersyName
+    body("jerseyName")
+    .exists()
+    .isString().withMessage("El nombre de la camiseta es necesario")
+    .isLength({ max: 15 }).withMessage("debe tener máximo 15 caracteres "),
+
+    //JersySize
+    body("jerseySize")
+    .exists()
+    .isString().withMessage("Talla de la camiseta es necesario")
+    .isLength({ max: 2 }).withMessage("debe tener máximo 2 caracteres "),
+
     // Estado del estudiante
     body("state")
         .optional()
