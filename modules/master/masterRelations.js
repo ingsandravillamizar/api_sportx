@@ -4,7 +4,7 @@ import positionCategory from "./positionCategory/positionCategory.js";
 
 import student from "./student/student.js";
 import identificationType from "./identificationType/identificationTypes.js";
-import category from "./category/category.js";
+import category from "./Category/category.js";
 import club from "./club/club.js";
 
 
