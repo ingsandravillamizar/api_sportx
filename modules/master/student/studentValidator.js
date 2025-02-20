@@ -77,6 +77,7 @@ const validateCreateStudent = [
         .exists().withMessage("La firma del acudiente es obligatoria")
         .isString().withMessage("Debe ser una cadena de texto"),
 
+
     // Seguridad (Seguro médico)
     body("medicalInsurance")
         .exists().withMessage("El seguro médico es obligatorio")

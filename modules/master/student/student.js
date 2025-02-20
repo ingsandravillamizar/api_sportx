@@ -43,34 +43,39 @@ const student = db.define('students', {
     },
     acudientSignature: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: true
     },
     fatherName: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     fatherCelphone: {
-        type: DataTypes.STRING(10)
+        type: DataTypes.STRING(10),
+        allowNull: true,
     },
     motherName: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     motherCelphone: {
-        type: DataTypes.STRING(10)
+        type: DataTypes.STRING(10),
+        allowNull: true
     },
     jerseyNumber: {
-        type: DataTypes.STRING(10)
+        type: DataTypes.STRING(10),
+        allowNull: false
     },
     jerseyName: {
-        type: DataTypes.STRING(10)
+        type: DataTypes.STRING(10),
+        allowNull: false
     },
     jerseySize: {
-        type: DataTypes.STRING(10)
+        type: DataTypes.STRING(10),
+        allowNull: false
     },
     medicalInsurance: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     bloodType: {
         type: DataTypes.STRING(4),
@@ -82,7 +87,7 @@ const student = db.define('students', {
     },
     observation: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: true
     },
     state:{
         type: DataTypes.BOOLEAN, 
