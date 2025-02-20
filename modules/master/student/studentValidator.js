@@ -78,7 +78,7 @@ const validateCreateStudent = [
         .isString().withMessage("Debe ser una cadena de texto"),
 
     // Seguridad (Seguro médico)
-    body("security")
+    body("medicalInsurance")
         .exists().withMessage("El seguro médico es obligatorio")
         .isString().withMessage("Debe ser una cadena de texto")
         .isLength({ max: 100 }).withMessage("Debe tener máximo 100 caracteres"),
