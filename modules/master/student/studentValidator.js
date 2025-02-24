@@ -14,9 +14,7 @@ const validateCreateStudent = [
 
     // Fotografía
     body("photo")
-        .exists().withMessage("La fotografía es obligatoria")
-        .isString().withMessage("Debe ser una URL válida")
-        .isLength({ max: 255 }).withMessage("La URL de la foto no debe superar los 255 caracteres"),
+        .optional(),
 
     // Nombres
     body("name")
