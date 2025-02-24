@@ -70,7 +70,7 @@ const student = db.define('students', {
         allowNull: false
     },
     jerseySize: {
-        type: DataTypes.STRING(3),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     medicalInsurance: {

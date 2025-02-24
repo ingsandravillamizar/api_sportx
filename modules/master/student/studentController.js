@@ -42,7 +42,14 @@ const getStudent = async(req, res) => {
 const createStudent = async (req, res) => {
     try {
         const body = matchedData(req)
-        const response = await student.create(body)
+
+        // Verificar si hay un archivo de imagen y obtener su ruta
+        const photoPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const response = await student.create({
+            ...body,
+            photo: photoPath, // Guardar la ruta en la BD
+        });
         res.send(response)
     } catch (error) {
         console.log(error)
