@@ -53,7 +53,7 @@ const createStudent = async (req, res) => {
         res.send(response)
     } catch (error) {
         console.log(error)
-        handleHttpError(res,  `No se pudo crear  ${entity} `)
+        handleHttpError(res,  `No se pudo crear . ${entity} `)
     }
 }
 
