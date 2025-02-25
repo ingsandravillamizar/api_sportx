@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', apiAuth, getStudents)
 router.get('/:id', apiAuth, validateGetStudent,  getStudent)
-router.post('/create', apiAuth, validateCreateStudent, upload.single('image'), createStudent)
+router.post('/create', apiAuth,  upload.single('image'), validateCreateStudent,createStudent)
 router.put('/:id', apiAuth,validateGetStudent,  updateStudent)
 router.delete('/delete/:id',  apiAuth, deleteStudent)
 
