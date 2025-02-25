@@ -40,6 +40,13 @@ const getStudent = async(req, res) => {
 }
 
 const createStudent = async (req, res) => {
+
+
+    console.log('Recibido en el servidor:');
+    console.log('Cuerpo de la solicitud:', req.body);
+    console.log('Archivos:', req.files);
+
+
     try {
         const body = matchedData(req)
 
