@@ -76,6 +76,18 @@ const validateCreateStudent = [
         .isString().withMessage("Debe ser una cadena de texto"),
 
 
+    // Datos del padre y de la madre opcionales
+
+    body("fatherName")
+        .optional(),
+    body("fatherCelphone")
+        .optional(),
+    body("motherName")
+        .optional(),
+    body("motherCelphone")
+        .optional(),
+    //
+
     // Seguridad (Seguro médico)
     body("medicalInsurance")
         .exists().withMessage("El seguro médico es obligatorio")
@@ -100,6 +112,10 @@ const validateCreateStudent = [
         .isString().withMessage("Debe ser una cadena de texto")
         .isLength({ max: 255 }).withMessage("Debe tener máximo 255 caracteres"),
 
+
+
+    body("jerseyNumber")
+        .optional(),
 
     //JersyName
     body("jerseyName")
