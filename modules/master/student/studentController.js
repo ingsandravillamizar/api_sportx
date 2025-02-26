@@ -9,8 +9,7 @@ const getStudents = async (req, res) =>{
     try {
         const registros = await student.findAll({
             where: {state: true},
-
-                    include: [
+            include: [
                 {
                     model: identificationType,
                     as: "identificationType",
