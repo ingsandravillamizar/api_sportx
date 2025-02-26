@@ -29,12 +29,12 @@ const getStudent = async(req, res) => {
                 {
                     model: identificationType,
                     as: "identificationType",
-                    attributes: ["id", "description"]
+                    attributes: ["id", "name"]
                 },
                 {
                     model: category,
                     as: "category",
-                    attributes: ["id", "description"]
+                    attributes: ["id", "name"]
                 },
                 {
                     model: club,
@@ -44,7 +44,7 @@ const getStudent = async(req, res) => {
                 {
                     model: position,
                     as: "position",
-                    attributes: ["id", "description"]
+                    attributes: ["id", "name"]
                 }
             ]
         });
