@@ -33,10 +33,12 @@ const getStudents = async (req, res) =>{
             ]
         });
         res.json(registros)
-    }catch{
-        handleHttpError(res, `No se pudo cargar ${entity} s` ); 
+    } catch (error) {
+        console.error("Error en getStudents:", error); // Muestra el error en la consola
+        handleHttpError(res, `No se pudo cargar ${entity}s`);
     }
 }
+
 
 const getStudent = async(req, res) => {
     try {
