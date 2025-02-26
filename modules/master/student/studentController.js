@@ -8,7 +8,30 @@ const entity = "student"
 const getStudents = async (req, res) =>{
     try {
         const registros = await student.findAll({
-            where: {state: true}
+            where: {state: true},
+
+                    include: [
+                {
+                    model: identificationType,
+                    as: "identificationType",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: category,
+                    as: "category",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: club,
+                    as: "club",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: position,
+                    as: "position",
+                    attributes: ["id", "name"]
+                }
+            ]
         });
         res.json(registros)
     }catch{
