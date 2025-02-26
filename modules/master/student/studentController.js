@@ -24,8 +24,32 @@ const getStudent = async(req, res) => {
             where: {
                 id: id,
                 state: true
-            }
-        })
+            },
+            include: [
+                {
+                    model: identificationType,
+                    as: "identificationType",
+                    attributes: ["id", "description"]
+                },
+                {
+                    model: category,
+                    as: "category",
+                    attributes: ["id", "description"]
+                },
+                {
+                    model: club,
+                    as: "club",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: position,
+                    as: "position",
+                    attributes: ["id", "description"]
+                }
+            ]
+        });
+
+
         if (!data){
             return res.status(404).json({
                 message:  `${entity} no encontrado(a) ó inactivo (a) ` 
