@@ -12,22 +12,18 @@ const getStudents = async (req, res) =>{
             include: [
                 {
                     model: identificationType,
-                    as: "identificationType",
                     attributes: ["id", "name"]
                 },
                 {
                     model: category,
-                    as: "category",
                     attributes: ["id", "name"]
                 },
                 {
                     model: club,
-                    as: "club",
                     attributes: ["id", "name"]
                 },
                 {
                     model: position,
-                    as: "position",
                     attributes: ["id", "name"]
                 }
             ]
@@ -52,22 +48,18 @@ const getStudent = async(req, res) => {
             include: [
                 {
                     model: identificationType,
-                    as: "identificationType",
                     attributes: ["id", "name"]
                 },
                 {
                     model: category,
-                    as: "category",
                     attributes: ["id", "name"]
                 },
                 {
                     model: club,
-                    as: "club",
                     attributes: ["id", "name"]
                 },
                 {
                     model: position,
-                    as: "position",
                     attributes: ["id", "name"]
                 }
             ]
