@@ -106,11 +106,22 @@ const createStudent = async (req, res) => {
 
 
 const updateStudent = async (req, res) => {
+
+
+    console.log('Recibido en el servidor:');
+    console.log('Cuerpo de la solicitud:', req.body);
+    console.log('Archivos:', req.files);
+
+
     try {
         const { id } = req.params
-
         const body = req.body
 
+        // Verificar si hay un archivo de imagen nuevo y obtener su ruta
+        if (req.file) {
+            body.photo = `/uploads/${req.file.filename}`;
+        }
+        
 
         const response = await student.update(body, {
             where: { id }
