@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', apiAuth, getStudents)
 router.get('/:id', apiAuth, validateGetStudent,  getStudent)
 router.post('/create', apiAuth,  upload.single('image'), validateCreateStudent,createStudent)
-router.put('/:id', apiAuth,pload.single('image'), validateGetStudent,  updateStudent)
+router.put('/:id', apiAuth,upload.single('image'), validateGetStudent,  updateStudent)
 router.delete('/delete/:id',  apiAuth, deleteStudent)
 
 //Carga de Imagenes
