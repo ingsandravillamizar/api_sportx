@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
 })
 // Filtro para validar tipos de archivo
 const fileFilter = (req, file, cb) => {
+    console.log("file",file)
     const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowedExtensions.includes(ext)) {
