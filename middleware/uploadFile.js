@@ -14,8 +14,9 @@ const storage = multer.diskStorage({
         if (!studentId) {
             return cb(new Error('Falta identificación del estudiante para el archivo'), null);
         }
-
+        console.log("filename", file)
         const fileName = `${studentId}${path.extname(file.originalname)}`;
+
         cb(null, fileName);
     }
 })
@@ -44,4 +45,4 @@ export default upload
 
 
 
- 
+// hola
