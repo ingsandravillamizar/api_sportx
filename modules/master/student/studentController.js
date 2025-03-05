@@ -5,6 +5,19 @@ import { student,identificationType,category,club,position } from "../masterRela
 
 const entity = "student"
 
+// Función para detectar tipo MIME
+function getMimeType(filePath) {
+    const extension = path.extname(filePath).toLowerCase();
+    const mimeTypes = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif'
+    };
+    return mimeTypes[extension] || 'application/octet-stream';
+}
+
+
 const getStudents = async (req, res) =>{
     try {
         const registros = await student.findAll({
@@ -28,7 +41,30 @@ const getStudents = async (req, res) =>{
                 }
             ]
         });
-        res.json(registros)
+            // Procesar imágenes en paralelo
+            const registrosConImagen = await Promise.all(
+                registros.map(async (estudiante) => {
+                    try {
+                        const fotoPath = path.join(__dirname, '..', 'public', estudiante.photo);
+                        const imageBuffer = await fs.readFile(fotoPath);
+                        const base64Image = imageBuffer.toString('base64');
+                        const mimeType = getMimeType(fotoPath); // Función para detectar tipo MIME
+                        
+                        return {
+                            ...estudiante.toJSON(),
+                            photoBase64: `data:${mimeType};base64,${base64Image}`
+                        };
+                    } catch (error) {
+                        console.error(`Error procesando imagen para ${estudiante.identification}:`, error);
+                        return {
+                            ...estudiante.toJSON(),
+                            photoBase64: null
+                        };
+                    }
+                })
+            );
+    
+            res.json(registrosConImagen);
     } catch (error) {
         console.error("Error en getStudents:", error); // Muestra el error en la consola
         handleHttpError(res, `No se pudo cargar ${entity}s`);
