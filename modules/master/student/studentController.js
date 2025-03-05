@@ -1,21 +1,15 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
 import { student,identificationType,category,club,position } from "../masterRelations.js";
-
+import path from 'path'; 
+import { promises as fs } from 'fs'; 
+import { fileURLToPath } from 'url';
 
 const entity = "student"
+// Obtener __dirname equivalente en ES Modules
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Función para detectar tipo MIME
-function getMimeType(filePath) {
-    const extension = path.extname(filePath).toLowerCase();
-    const mimeTypes = {
-        '.jpg': 'image/jpeg',
-        '.jpeg': 'image/jpeg',
-        '.png': 'image/png',
-        '.gif': 'image/gif'
-    };
-    return mimeTypes[extension] || 'application/octet-stream';
-}
+
 
 
 const getStudents = async (req, res) =>{
@@ -45,17 +39,26 @@ const getStudents = async (req, res) =>{
             const registrosConImagen = await Promise.all(
                 registros.map(async (estudiante) => {
                     try {
-                        const fotoPath = path.join(__dirname, '..', 'public', estudiante.photo);
+                        // Construir ruta absoluta (ajusta según tu estructura)
+                        const fotoPath = path.join(
+                            __dirname, 
+                            '..', 
+                            '..', 
+                            '..', 
+                            'public', 
+                            estudiante.photo
+                        );
+                        
+                        // Verificar y leer archivo
+                        await fs.access(fotoPath);
                         const imageBuffer = await fs.readFile(fotoPath);
-                        const base64Image = imageBuffer.toString('base64');
-                        const mimeType = getMimeType(fotoPath); // Función para detectar tipo MIME
                         
                         return {
                             ...estudiante.toJSON(),
-                            photoBase64: `data:${mimeType};base64,${base64Image}`
+                            photoBase64: `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`
                         };
                     } catch (error) {
-                        console.error(`Error procesando imagen para ${estudiante.identification}:`, error);
+                        console.error(`Error en estudiante ${estudiante.id}:`, error.message);
                         return {
                             ...estudiante.toJSON(),
                             photoBase64: null
