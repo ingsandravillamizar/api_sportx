@@ -48,6 +48,8 @@ const getStudents = async (req, res) =>{
                             'public', 
                             estudiante.photo
                         );
+
+                        console.log('Ruta completa:', fotoPath);
                         
                         // Verificar y leer archivo
                         await fs.access(fotoPath);
