@@ -16,6 +16,10 @@ import clubRoutes from './modules/master/club/clubRoutes.js';
 import positionCategoryRoutes  from './modules/master/positionCategory/positionCategoryRoutes.js'
 import positionRoutes from './modules/master/position/positionRoutes.js'
 import studentRoutes from './modules/master/student/studentRoutes.js'
+import companyRoutes from './modules/master/Company/companyRoutes.js'
+
+
+
 /*** Crear app   */
 const app = express();
 
@@ -50,6 +54,7 @@ app.use('/api_sportx/clubes', clubRoutes);
 app.use('/api_sportx/positioncategories', positionCategoryRoutes);
 app.use('/api_sportx/positions', positionRoutes);
 app.use('/api_sportx/students', studentRoutes);
+app.use('/api_sportx/companies', companyRoutes);
 
 // hola
 /***
