@@ -8,11 +8,11 @@ const router = express.Router();
 
 router.get('/', apiAuth, getCompanies)
 router.get('/:id', apiAuth, validateGetCompany,  getCompany)
-router.post('/create', apiAuth, validateCreateCompany, createCompany)
-router.put('/:id', apiAuth,validateGetCompany,  updateCompany)
+router.post('/create', apiAuth,  upload.single('image'), validateCreateCompany, createCompany)
+router.put('/:id', apiAuth,  upload.single('image'), validateGetCompany,  updateCompany)
 router.delete('/delete/:id',  apiAuth, deleteCompany)
 
 
-// hola
+
 
 export default router
