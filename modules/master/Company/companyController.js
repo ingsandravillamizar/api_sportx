@@ -70,9 +70,15 @@ const createCompany = async (req, res) => {
 
 const updateCompany = async (req, res) => {
     try {
+
         const { id } = req.params
 
         const body = req.body
+
+        // Verificar si hay un archivo de imagen nuevo y obtener su ruta
+        if (req.file) {
+            body.logo = `/uploads/${req.file.filename}`;
+        }
 
 
         const response = await company.update(body, {
