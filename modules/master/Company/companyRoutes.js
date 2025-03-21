@@ -1,7 +1,7 @@
 import express from 'express';import { apiAuth } from '../../../auth/middleware/apiauth.js';
 import { validateCreateCompany, validateGetCompany } from './companyValidator.js';
 import { createCompany, deleteCompany, getCompanies, getCompany, updateCompany } from './companyController.js';
-
+import upload from '../../../middleware/uploadFile.js';
 
 //falta arreglar las validaciones...
 const router = express.Router();
