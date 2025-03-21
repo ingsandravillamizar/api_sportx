@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "../../../config/db.js";
 
-const company = db.define('companies', {
+const instructor = db.define('instructors', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,7 +12,7 @@ const company = db.define('companies', {
         unique: true,  // La identificación debe ser única
         allowNull: false
     },
-    logo: {
+    photo: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
@@ -20,19 +20,10 @@ const company = db.define('companies', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-
-    slogan: {
-        type: DataTypes.STRING(200),
-        allowNull: false
+    bornDate : {
+        type: DataTypes.DATE,
+        allowNull: false,
     },
-
-
-
-    address: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,24 +31,17 @@ const company = db.define('companies', {
     celphone: {
         type: DataTypes.STRING(10)
     },
+    
     observation: {
-        type: DataTypes.STRING(200),
-        allowNull: false
+        type: DataTypes.STRING(255),
+        allowNull: true
     },
-    
-    ownerIdentification: {
-        type: DataTypes.STRING(15)
-    },
-    ownerName: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    
     state:{
         type: DataTypes.BOOLEAN, 
         allowNull: false,
         defaultValue: true 
     },
+    
     user: {
         type: DataTypes.STRING(50),
         allowNull: false
@@ -72,5 +56,5 @@ const company = db.define('companies', {
     freezeTableName: true // Evita que Sequelize pluralice el nombre de la tabla
 });
 
-export default company;
+export default instructor;
 

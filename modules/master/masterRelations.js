@@ -6,6 +6,7 @@ import student from "./student/student.js";
 import identificationType from "./identificationType/identificationTypes.js";
 import category from "./Category/category.js";
 import club from "./club/club.js";
+import instructor from "./instructor/instructor.js";
 
 
 /** La categoria de posiciones tienen muchas posiciones
@@ -19,6 +20,12 @@ position.belongsTo(positionCategory, { foreignKey: "positionCategoryId" });
 /** Relación: Estudiantes y Tipo de Identificación */
 identificationType.hasMany(student, { foreignKey: "identificationTypeId" });
 student.belongsTo(identificationType, { foreignKey: "identificationTypeId" });
+
+
+identificationType.hasMany(instructor, { foreignKey: "identificationTypeId" });
+instructor.belongsTo(identificationType, { foreignKey: "identificationTypeId" });
+
+
 
 /** Relación: Estudiantes y Categoría */
 category.hasMany(student, { foreignKey: "categoryId" });
@@ -36,8 +43,9 @@ student.belongsTo(position, { foreignKey: "positionId" });
 export{
     positionCategory,
     position,
-    student,
     identificationType,
     category,
-    club
+    club,
+    student,
+    instructor
 }
