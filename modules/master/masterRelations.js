@@ -7,6 +7,8 @@ import identificationType from "./identificationType/identificationTypes.js";
 import category from "./Category/category.js";
 import club from "./club/club.js";
 import instructor from "./instructor/instructor.js";
+import company from "./Company/company.js";
+import season from "./season/season.js";
 
 
 /** La categoria de posiciones tienen muchas posiciones
@@ -40,6 +42,10 @@ position.hasMany(student, { foreignKey: "positionId" });
 student.belongsTo(position, { foreignKey: "positionId" });
 
 
+company.hasMany(season, { foreignKey: "companyId" });
+season.belongsTo(company, { foreignKey: "companyId" });
+
+
 export{
     positionCategory,
     position,
@@ -47,5 +53,6 @@ export{
     category,
     club,
     student,
-    instructor
+    instructor,
+    season
 }

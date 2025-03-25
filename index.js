@@ -18,7 +18,7 @@ import positionRoutes from './modules/master/position/positionRoutes.js'
 import studentRoutes from './modules/master/student/studentRoutes.js'
 import companyRoutes from './modules/master/Company/companyRoutes.js'
 import instructorRoutes from './modules/master/instructor/instructorRoutes.js'
-
+import seasonsRoutes from './modules/master/season/seasonRoutes.js'
 
 
 /*** Crear app   */
@@ -57,6 +57,7 @@ app.use('/api_sportx/positions', positionRoutes);
 app.use('/api_sportx/students', studentRoutes);
 app.use('/api_sportx/companies', companyRoutes);
 app.use('/api_sportx/instructors', instructorRoutes);
+app.use('/api_sportx/seasons', instructorRoutes);
 
 
 // hola
