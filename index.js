@@ -57,7 +57,7 @@ app.use('/api_sportx/positions', positionRoutes);
 app.use('/api_sportx/students', studentRoutes);
 app.use('/api_sportx/companies', companyRoutes);
 app.use('/api_sportx/instructors', instructorRoutes);
-app.use('/api_sportx/seasons', instructorRoutes);
+app.use('/api_sportx/seasons', seasonsRoutes);
 
 
 // hola
