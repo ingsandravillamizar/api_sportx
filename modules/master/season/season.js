@@ -7,15 +7,6 @@ const season = db.define('seasons', {
         primaryKey: true,
         autoIncrement: true
     },
-
-    startDate: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    endDate: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
     name: {
         type: DataTypes.STRING(15),
         allowNull: false
@@ -24,6 +15,15 @@ const season = db.define('seasons', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
+    startDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    endDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    
     enrollmentFee: {  
         type: DataTypes.DECIMAL(10,2),
         allowNull: false

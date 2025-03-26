@@ -8,7 +8,7 @@ const entity = "season"
 const getSeasons = async (req, res) =>{
     try {
         const registros = await season.findAll({
-            where: {state: true}
+
         });
         res.json(registros)
     }catch{
