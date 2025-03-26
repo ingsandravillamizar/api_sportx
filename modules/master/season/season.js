@@ -16,6 +16,10 @@ const season = db.define('seasons', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    name: {
+        type: DataTypes.STRING(15),
+        allowNull: false
+    },
     description: {
         type: DataTypes.STRING(100),
         allowNull: false
