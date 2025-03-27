@@ -8,6 +8,16 @@ const entity = "category"
 const getCategories = async (req, res) =>{
     try {
         const registros = await category.findAll({
+        });
+        res.json(registros)
+    }catch{
+        handleHttpError(res, `No se pudo cargar ${entity} s` ); 
+    }
+}
+
+const getActiveCategories = async (req, res) =>{
+    try {
+        const registros = await category.findAll({
             where: {state: true}
         });
         res.json(registros)

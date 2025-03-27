@@ -18,11 +18,11 @@ const category = db.define('categories', {
     },
 
     name: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(50),
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(150),
         allowNull: false
     },
     state:{
