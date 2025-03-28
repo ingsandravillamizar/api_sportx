@@ -24,15 +24,17 @@ const getCatInstructor = async (req, res) => {
         const { id } = req;
 
         const data = await category.findOne({
-            where: { id }, // Buscamos la categoría por ID
+            where: { id },
             include: [
                 {
-                    model: instructor, // Relación con instructores
+                    model: instructor,
                     attributes: ['id', 'name'],
-                    through: { attributes: [] } // Evita que se muestre la tabla intermedia
+                    through: {
+                        attributes: ['order'] // Obtener 'order' desde la tabla intermedia
+                    }
                 }
             ],
-            attributes: ['id', 'name', 'description','order']// Atributos de la categoría
+            attributes: ['id', 'name', 'description']
         });
 
         if (!data) {
@@ -41,8 +43,20 @@ const getCatInstructor = async (req, res) => {
             });
         }
 
-        res.status(200).json(data);
-        console.log(data);
+        // Reformatear para que 'order' esté en cada instructor
+        const formattedData = {
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            instructors: data.instructors.map(instructor => ({
+                id: instructor.id,
+                name: instructor.name,
+                order: instructor.categories_instructors.order // Extraer 'order' de la tabla intermedia
+            }))
+        };
+
+        res.status(200).json(formattedData);
+        console.log(formattedData);
     } catch (error) {
         handleHttpError(res, `Error al traer datos`);
         console.error(error);
