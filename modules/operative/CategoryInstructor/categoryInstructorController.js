@@ -28,7 +28,7 @@ const getCatInstructor = async (req, res) => {
             include: [
                 {
                     model: instructor, // Relación con instructores
-                    attributes: ['id', 'name', 'description'],
+                    attributes: ['id', 'name'],
                     through: { attributes: [] } // Evita que se muestre la tabla intermedia
                 }
             ],
