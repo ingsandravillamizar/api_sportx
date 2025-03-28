@@ -23,8 +23,7 @@ const getCatInstructor = async(req, res) => {
         const { id } = req
         const data = await categoryInstructor.findOne({
             where: {
-                id: id,
-                state: true
+                categoryId: id
             }
         })
         if (!data){
