@@ -24,7 +24,17 @@ const getCatInstructor = async(req, res) => {
         const data = await categoryInstructor.findOne({
             where: {
                 categoryId: id
-            }
+            },
+            include: [
+                {
+                    model: Instructor, // Modelo de profesor
+                    attributes: ['id', 'name', 'description'] // Campos del profesor
+                },
+                {
+                    model: Category, // Modelo de categoría
+                    attributes: ['id', 'name', 'description'] // Campos de la categoría
+                }
+            ]
         })
         if (!data){
             return res.status(404).json({
