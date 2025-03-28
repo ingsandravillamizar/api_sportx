@@ -2,6 +2,7 @@ import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
 
 import { categoryInstructor } from "../operativeRelations.js";
+import { category, instructor } from "../../master/masterRelations.js";
 
 
 const entity = "categoryInstructor"
@@ -27,11 +28,11 @@ const getCatInstructor = async(req, res) => {
             },
             include: [
                 {
-                    model: Instructor, // Modelo de profesor
+                    model: instructor, // Modelo de profesor
                     attributes: ['id', 'name', 'description'] // Campos del profesor
                 },
                 {
-                    model: Category, // Modelo de categoría
+                    model: category, // Modelo de categoría
                     attributes: ['id', 'name', 'description'] // Campos de la categoría
                 }
             ]
