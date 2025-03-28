@@ -29,11 +29,13 @@ const getCatInstructor = async(req, res) => {
             include: [
                 {
                     model: instructor, // Modelo de profesor
-                    attributes: ['id', 'name', 'description'] // Campos del profesor
+                    attributes: ['id', 'name', 'description'], // Campos del profesor
+                    through: { attributes: [] } 
                 },
                 {
                     model: category, // Modelo de categoría
-                    attributes: ['id', 'name', 'description'] // Campos de la categoría
+                    attributes: ['id', 'name', 'description'],// Campos de la categoría
+                    through: { attributes: [] } 
                 }
             ]
         })
