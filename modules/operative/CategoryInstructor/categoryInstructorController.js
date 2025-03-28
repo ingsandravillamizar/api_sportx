@@ -28,11 +28,11 @@ const getCatInstructor = async (req, res) => {
             include: [
                 {
                     model: instructor, // Relación con instructores
-                    attributes: ['id', 'name', 'order'],
+                    attributes: ['id', 'name'],
                     through: { attributes: [] } // Evita que se muestre la tabla intermedia
                 }
             ],
-            attributes: ['id', 'name', 'description'] // Atributos de la categoría
+            attributes: ['id', 'name', 'description','order']// Atributos de la categoría
         });
 
         if (!data) {
