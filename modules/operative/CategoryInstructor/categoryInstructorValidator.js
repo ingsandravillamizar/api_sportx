@@ -1,11 +1,15 @@
 import { body, check, validationResult } from "express-validator";
 
-const validateCreateCategory = [
+const validateCreateCatInstructor = [
     
-    body('code').exists().notEmpty().isLength({min: 1, max: 2}),
-    body('born').isInt({ min: 2000 }).withMessage('El año de nacimiento debe ser un número entero mayor o igual a 2000.'),
-    body('name').exists().notEmpty().isLength({min: 4, max: 30}),
-    body('description').exists().notEmpty().isLength({min: 0, max: 150}),
+    body('categoryId')
+        .exists().withMessage('El ID de la categoría es obligatorio.')
+        .isInt({ min: 1 }).withMessage('El ID de la categoría debe ser un número entero positivo.'),
+
+    body('instructorId')
+        .exists().withMessage('El ID del instructor es obligatorio.')
+        .isInt({ min: 1 }).withMessage('El ID del instructor debe ser un número entero positivo.'),
+
     body('user').optional().isString().withMessage('El usuario debe ser una cadena de texto'),
     body('userMod').optional().isString().withMessage('El usuarioMod debe ser una cadena de texto'),
 
@@ -23,7 +27,7 @@ const validateCreateCategory = [
     }
 ];
 
-const validateGetCategory = [
+const validateGetCatInstructor = [
     check('id').exists().notEmpty(),
 
     (req, res, next) =>{
@@ -38,6 +42,6 @@ const validateGetCategory = [
 ]
 
 export {
-    validateCreateCategory,
-    validateGetCategory
+    validateCreateCatInstructor,
+    validateGetCatInstructor
 };
