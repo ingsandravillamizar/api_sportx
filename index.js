@@ -19,6 +19,7 @@ import studentRoutes from './modules/master/student/studentRoutes.js'
 import companyRoutes from './modules/master/Company/companyRoutes.js'
 import instructorRoutes from './modules/master/instructor/instructorRoutes.js'
 import seasonsRoutes from './modules/master/season/seasonRoutes.js'
+import categoryInstructorRoutes from './modules/operative/CategoryInstructor/categoryInstructorRoutes.js'
 
 
 /*** Crear app   */
@@ -58,6 +59,8 @@ app.use('/api_sportx/students', studentRoutes);
 app.use('/api_sportx/companies', companyRoutes);
 app.use('/api_sportx/instructors', instructorRoutes);
 app.use('/api_sportx/seasons', seasonsRoutes);
+app.use('/api_sportx/categoryInstructors', categoryInstructorRoutes);
+
 
 
 // hola

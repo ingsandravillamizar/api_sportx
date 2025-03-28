@@ -1,13 +1,14 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import { category}  from "../masterRelations.js";
+
+import { categoryInstructor } from "../operativeRelations.js";
 
 
-const entity = "category"
+const entity = "categoryInstructor"
 
-const getCategories = async (req, res) =>{
+const getCatInstructors = async (req, res) =>{
     try {
-        const registros = await category.findAll({
+        const registros = await categoryInstructor.findAll({
         });
         res.json(registros)
     }catch{
@@ -15,22 +16,12 @@ const getCategories = async (req, res) =>{
     }
 }
 
-const getActiveCategories = async (req, res) =>{
-    try {
-        const registros = await category.findAll({
-            where: {state: true}
-        });
-        res.json(registros)
-    }catch{
-        handleHttpError(res, `No se pudo cargar ${entity} s` ); 
-    }
-}
-
-const getCategory = async(req, res) => {
+ 
+const getCatInstructor = async(req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await category.findOne({
+        const data = await categoryInstructor.findOne({
             where: {
                 id: id,
                 state: true
@@ -49,10 +40,10 @@ const getCategory = async(req, res) => {
     }
 }
 
-const createCategory = async (req, res) => {
+const createCatInstructor = async (req, res) => {
     try {
         const body = matchedData(req)
-        const response = await category.create(body)
+        const response = await categoryInstructor.create(body)
         res.send(response)
     } catch (error) {
         console.log(error)
@@ -61,14 +52,14 @@ const createCategory = async (req, res) => {
 }
 
 
-const updateCategory = async (req, res) => {
+const updateCatInstructor = async (req, res) => {
     try {
         const { id } = req.params
 
         const body = req.body
 
 
-        const response = await category.update(body, {
+        const response = await categoryInstructor.update(body, {
             where: { id }
         })
 
@@ -91,9 +82,9 @@ const updateCategory = async (req, res) => {
 }
 
 
-const deleteCategory = async(req, res) =>{
+const deleteCatInstructor = async(req, res) =>{
     try {
-        const { id } = req.params
+        const { id } = req.categoryInstructor
         const response = await category.update({state: false}, {
             where: {id, state: true}
         })
@@ -114,10 +105,9 @@ const deleteCategory = async(req, res) =>{
 }
 
 export{
-    getCategories,
-    getCategory,
-    createCategory,
-    deleteCategory,
-    updateCategory,
-    getActiveCategories
+    getCatInstructors,
+    getCatInstructor,
+    createCatInstructor,
+    deleteCatInstructor,
+    updateCatInstructor 
 }
