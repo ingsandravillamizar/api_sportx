@@ -17,40 +17,37 @@ const getCatInstructors = async (req, res) =>{
     }
 }
 
- 
-const getCatInstructor = async(req, res) => {
+
+const getCatInstructor = async (req, res) => {
     try {
-        req = matchedData(req)
-        const { id } = req
-        const data = await categoryInstructor.findOne({
-            where: {
-                categoryId: id
-            },
+        req = matchedData(req);
+        const { id } = req;
+
+        const data = await category.findOne({
+            where: { id }, // Buscamos la categoría por ID
             include: [
                 {
-                    model: instructor, // Modelo de profesor
-                    attributes: ['id', 'name', 'description'], // Campos del profesor
-                    through: { attributes: [] } 
-                },
-                {
-                    model: category, // Modelo de categoría
-                    attributes: ['id', 'name', 'description'],// Campos de la categoría
-                    through: { attributes: [] } 
+                    model: instructor, // Relación con instructores
+                    attributes: ['id', 'name', 'description'],
+                    through: { attributes: [] } // Evita que se muestre la tabla intermedia
                 }
-            ]
-        })
-        if (!data){
+            ],
+            attributes: ['id', 'name', 'description'] // Atributos de la categoría
+        });
+
+        if (!data) {
             return res.status(404).json({
-                message:  `${entity} no encontrado(a) ó inactivo (a) ` 
-            })
+                message: `Categoría no encontrada o inactiva`
+            });
         }
+
         res.status(200).json(data);
-        console.log(data)
+        console.log(data);
     } catch (error) {
-        handleHttpError(res, `Error al traer ${entity}  ` )
-        console.error(error)
+        handleHttpError(res, `Error al traer datos`);
+        console.error(error);
     }
-}
+};
 
 const createCatInstructor = async (req, res) => {
     try {
