@@ -1,6 +1,7 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
 import { category}  from "../masterRelations.js";
+import { sequelize } from "../../../config/mysql.js";
 
 
 const entity = "category"
