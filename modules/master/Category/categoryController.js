@@ -67,6 +67,8 @@ const updateCategory = async (req, res) => {
 
         const body = req.body
 
+        console.log("cuerpo de la solicitud", req.body)
+
 
         const response = await category.update(body, {
             where: { id }
