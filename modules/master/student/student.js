@@ -18,7 +18,11 @@ const student = db.define('students', {
     },
     name: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        set(value) {
+            // Convierte a mayúsculas y elimina espacios extras
+            this.setDataValue('name', value.toUpperCase().trim());
+        }
     },
     bornDate : {
         type: DataTypes.DATE,
@@ -36,7 +40,11 @@ const student = db.define('students', {
     },
     acudientName: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        set(value) {
+            // Convierte a mayúsculas y elimina espacios extras
+            this.setDataValue('acudientName', value.toUpperCase().trim());
+        }
     },
     acudientCelphone: {
         type: DataTypes.STRING(10)
@@ -47,7 +55,11 @@ const student = db.define('students', {
     },
     fatherName: {
         type: DataTypes.STRING(100),
-        allowNull: true
+        allowNull: true,
+        set(value) {
+            // Convierte a mayúsculas y elimina espacios extras
+            this.setDataValue('fatherName', value.toUpperCase().trim());
+        }
     },
     fatherCelphone: {
         type: DataTypes.STRING(10),
@@ -55,7 +67,11 @@ const student = db.define('students', {
     },
     motherName: {
         type: DataTypes.STRING(100),
-        allowNull: true
+        allowNull: true,
+        set(value) {
+            // Convierte a mayúsculas y elimina espacios extras
+            this.setDataValue('motherName', value.toUpperCase().trim());
+        }
     },
     motherCelphone: {
         type: DataTypes.STRING(10),

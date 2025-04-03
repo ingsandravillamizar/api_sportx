@@ -18,7 +18,10 @@ const instructor = db.define('instructors', {
     },
     name: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        set(value) {
+            this.setDataValue('name', value.toUpperCase().trim());
+        }
     },
     bornDate : {
         type: DataTypes.DATE,
