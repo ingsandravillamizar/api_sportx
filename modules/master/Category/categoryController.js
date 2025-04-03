@@ -136,7 +136,8 @@ const updateCategory_c = async (req, res) => {
                     categoryId: id,
                     instructorId: instructor.instructorId,
                     order: instructor.order || 1,
-                    user: req.body.user 
+                    user: req.body.user ,
+                    userMod: req.body.user
                 }));
                 
                 console.log("Creating new relationships:", instructorRelations);
