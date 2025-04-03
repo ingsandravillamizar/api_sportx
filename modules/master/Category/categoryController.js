@@ -2,9 +2,13 @@ import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
 import { sequelize, category, instructor } from "../masterRelations.js";
 import { categoryInstructor } from "../../operative/operativeRelations.js";
- 
+
 import path from 'path'; 
 import { promises as fs } from 'fs'; 
+import { fileURLToPath } from 'url';
+
+// Obtener __dirname equivalente en ES Modules
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 const entity = "category"
