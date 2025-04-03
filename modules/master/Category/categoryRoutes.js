@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', apiAuth, getCategories)
 router.get('/:id', apiAuth, validateGetCategory,  getCategory)
-router.post('/create', apiAuth, validateCreateCategory, updateCategory_c)
-router.put('/:id', apiAuth,validateGetCategory,  updateCategory)
+router.post('/create', apiAuth, validateCreateCategory, createCategory)
+router.put('/:id', apiAuth,validateGetCategory,  updateCategory_c)
 router.delete('/delete/:id',  apiAuth, deleteCategory)
 
 
