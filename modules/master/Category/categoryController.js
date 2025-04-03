@@ -1,7 +1,8 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import { sequelize, category } from "../masterRelations.js";
-import {   categoryInstructor } from "../../operative/operativeRelations.js";
+import { category } from "../masterRelations.js";
+import { categoryInstructor } from "../../operative/operativeRelations.js";
+import { Sequelize } from "sequelize";
 
 const entity = "category"
 
@@ -97,7 +98,7 @@ const updateCategory_c = async (req, res) => {
     
     try {
         // Start a transaction for maintaining data integrity
-        transaction = await sequelize.transaction();
+        transaction = await Sequelize.transaction();
         
         const { id } = req.params;
         
