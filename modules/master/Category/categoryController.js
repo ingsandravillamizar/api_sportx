@@ -25,23 +25,22 @@ const getCategories = async (req, res) => {
                     model: instructor,
                     through: {
                         attributes: [],
-                        where: { order: 1 } // Filtra solo el instructor principal
+                        where: { order: 1 }
                     },
                     attributes: ['id', 'name', 'photo'],
-                    required: false // Para incluir categorías sin instructor principal
+                    required: false
                 }
             ]
         });
 
-        // Procesar imágenes en paralelo
         const registrosConInstructor = await Promise.all(
             registros.map(async (categoria) => {
-                try {
-                    const categoriaJSON = categoria.toJSON();
+                const categoriaJSON = categoria.toJSON();
+                
+                if (categoriaJSON.instructors?.length > 0) {
+                    const instructorPrincipal = categoriaJSON.instructors[0];
                     
-                    if (categoriaJSON.instructors && categoriaJSON.instructors.length > 0) {
-                        const instructorPrincipal = categoriaJSON.instructors[0];
-                        
+                    try {
                         if (instructorPrincipal.photo) {
                             const fotoPath = path.join(
                                 __dirname, 
@@ -51,19 +50,23 @@ const getCategories = async (req, res) => {
                                 'public', 
                                 instructorPrincipal.photo
                             );
-
-                            await fs.access(fotoPath);
-                            const imageBuffer = await fs.readFile(fotoPath);
                             
-                            instructorPrincipal.photoBase64 = `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`;
+                            // Validar que el archivo existe
+                            await fs.access(fotoPath, fs.constants.F_OK);
+                            
+                            // Leer y convertir a base64
+                            const imageBuffer = await fs.readFile(fotoPath);
+                            const extension = path.extname(fotoPath).replace('.', '');
+                            
+                            instructorPrincipal.photoBase64 = `data:image/${extension};base64,${imageBuffer.toString('base64')}`;
                         }
+                    } catch (error) {
+                        console.error(`Error procesando imagen de instructor ${instructorPrincipal.id}:`, error.message);
+                        instructorPrincipal.photoBase64 = null;
                     }
-                    
-                    return categoriaJSON;
-                } catch (error) {
-                    console.error(`Error procesando categoría ${categoria.id}:`, error.message);
-                    return categoria.toJSON();
                 }
+                
+                return categoriaJSON;
             })
         );
 
@@ -73,7 +76,6 @@ const getCategories = async (req, res) => {
         handleHttpError(res, `No se pudo cargar ${entity}s`);
     }
 }
-
 
 const getActiveCategories = async (req, res) =>{
     try {
