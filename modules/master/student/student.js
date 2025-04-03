@@ -1,6 +1,15 @@
 import { DataTypes } from "sequelize";
 import db from "../../../config/db.js";
 
+// Función helper reutilizable
+const uppercaseTrim = (value) => {
+    if (typeof value === 'string') {
+        return value.toUpperCase().trim();
+    }
+    return value;
+};
+
+
 const student = db.define('students', {
     id: {
         type: DataTypes.INTEGER,
@@ -20,8 +29,7 @@ const student = db.define('students', {
         type: DataTypes.STRING(100),
         allowNull: false,
         set(value) {
-            // Convierte a mayúsculas y elimina espacios extras
-            this.setDataValue('name', value.toUpperCase().trim());
+            this.setDataValue('name', uppercaseTrim(value));
         }
     },
     bornDate : {
@@ -42,8 +50,7 @@ const student = db.define('students', {
         type: DataTypes.STRING(100),
         allowNull: false,
         set(value) {
-            // Convierte a mayúsculas y elimina espacios extras
-            this.setDataValue('acudientName', value.toUpperCase().trim());
+            this.setDataValue('acudientName', uppercaseTrim(value));
         }
     },
     acudientCelphone: {
@@ -55,11 +62,7 @@ const student = db.define('students', {
     },
     fatherName: {
         type: DataTypes.STRING(100),
-        allowNull: true,
-        set(value) {
-            // Convierte a mayúsculas y elimina espacios extras
-            this.setDataValue('fatherName', value.toUpperCase().trim());
-        }
+        allowNull: true
     },
     fatherCelphone: {
         type: DataTypes.STRING(10),
@@ -69,13 +72,15 @@ const student = db.define('students', {
         type: DataTypes.STRING(100),
         allowNull: true,
         set(value) {
-            // Convierte a mayúsculas y elimina espacios extras
-            this.setDataValue('motherName', value.toUpperCase().trim());
+            this.setDataValue('fatherName', uppercaseTrim(value));
         }
     },
     motherCelphone: {
         type: DataTypes.STRING(10),
-        allowNull: true
+        allowNull: true,
+        set(value) {
+            this.setDataValue('motherName', uppercaseTrim(value));
+        }
     },
     jerseyNumber: {
         type: DataTypes.STRING(3),
@@ -135,8 +140,28 @@ const student = db.define('students', {
 },
 {
     timestamps: true,
-    freezeTableName: true // Evita que Sequelize pluralice el nombre de la tabla
+    freezeTableName: true,
+    hooks: {
+        beforeValidate: (student) => {
+            // Asegurar formato para actualizaciones parciales
+            const fieldsToFormat = [
+                'name',
+                'acudientName',
+                'fatherName',
+                'motherName',
+                'jerseyName'
+            ];
+            
+            fieldsToFormat.forEach(field => {
+                if (student[field]) {
+                    student[field] = uppercaseTrim(student[field]);
+                }
+            });
+        }
+    }
 });
+
+
 
 export default student;
 
