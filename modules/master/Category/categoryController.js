@@ -1,8 +1,8 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import { category } from "../masterRelations.js";
+import { Sequelize, category } from "../masterRelations.js";
 import { categoryInstructor } from "../../operative/operativeRelations.js";
-import { Sequelize } from "sequelize";
+ 
 
 const entity = "category"
 

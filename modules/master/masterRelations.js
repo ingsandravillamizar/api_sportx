@@ -1,3 +1,7 @@
+
+import { sequelize } from "../../config/db.js";
+
+
 import position from "./position/position.js";
 import positionCategory from "./positionCategory/positionCategory.js";
 
@@ -47,6 +51,7 @@ season.belongsTo(company, { foreignKey: "companyId" });
 
 
 export{
+    sequelize,
     positionCategory,
     position,
     identificationType,
