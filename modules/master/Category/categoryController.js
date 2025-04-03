@@ -1,7 +1,6 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import { category}  from "../masterRelations.js";
-
+import { sequelize, category, categoryInstructor } from "../masterRelations.js";
 
 
 const entity = "category"
@@ -93,7 +92,79 @@ const updateCategory = async (req, res) => {
     }
 }
 
-
+const updateCategory_c = async (req, res) => {
+    let transaction;
+    
+    try {
+        // Start a transaction for maintaining data integrity
+        transaction = await sequelize.transaction();
+        
+        const { id } = req.params;
+        
+        // Extract instructors from body and remove from category data
+        const { instructors, ...categoryData } = req.body;
+        
+        console.log("Cuerpo de la solicitud", req.body);
+        
+        // Update the category first
+        const response = await category.update(categoryData, {
+            where: { id },
+            transaction
+        });
+        
+        if (response[0] === 0) {
+            await transaction.rollback();
+            return res.status(404).json({
+                message: `${entity} No encontrado o No se realizaron cambios`
+            });
+        }
+        
+        // Handle instructors if provided
+        if (instructors && Array.isArray(instructors)) {
+            // First, delete all existing relationships for this category
+            await categoryInstructor.destroy({
+                where: { categoryId: id },
+                transaction
+            });
+            
+            // Then create new relationships
+            if (instructors.length > 0) {
+                const instructorRelations = instructors.map(instructor => ({
+                    categoryId: id,
+                    instructorId: instructor.id,
+                    order: instructor.order || 0
+                }));
+                
+                await categoryInstructor.bulkCreate(instructorRelations, { transaction });
+            }
+        }
+        
+        // Commit the transaction
+        await transaction.commit();
+        
+        // Get updated category with its instructors
+        const updatedCategory = await category.findByPk(id, {
+            include: [
+                {
+                    association: 'instructors',
+                    through: { attributes: ['order'] }
+                }
+            ]
+        });
+        
+        res.status(200).json({
+            message: `${entity} actualizado correctamente`,
+            data: updatedCategory
+        });
+        
+    } catch (error) {
+        // Rollback transaction in case of error
+        if (transaction) await transaction.rollback();
+        
+        handleHttpError(res, `No se pudo actualizar ${entity}`);
+        console.error(error);
+    }
+};
 
 
 
@@ -125,5 +196,6 @@ export{
     createCategory,
     deleteCategory,
     updateCategory,
+    updateCategory_c,
     getActiveCategories
 }
