@@ -123,10 +123,12 @@ const updateCategory_c = async (req, res) => {
         // Handle instructors if provided
         if (instructors && Array.isArray(instructors)) {
             // First, delete all existing relationships for this category
-            await categoryInstructor.destroy({
+            console.log("Deleting existing relationships for categoryId:", id);
+            const deleteResult = await categoryInstructor.destroy({
                 where: { categoryId: id },
                 transaction
             });
+            console.log("Delete result:", deleteResult);
             
             // Then create new relationships
             if (instructors.length > 0) {
@@ -136,6 +138,7 @@ const updateCategory_c = async (req, res) => {
                     order: instructor.order || 0
                 }));
                 
+                console.log("Creating new relationships:", instructorRelations);
                 await categoryInstructor.bulkCreate(instructorRelations, { transaction });
             }
         }
@@ -163,7 +166,7 @@ const updateCategory_c = async (req, res) => {
         if (transaction) await transaction.rollback();
         
         handleHttpError(res, `No se pudo actualizar ${entity}`);
-        console.error(error);
+        console.error("Detailed error:", error);
     }
 };
 
