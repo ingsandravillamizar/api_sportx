@@ -6,7 +6,7 @@ import { categoryInstructor } from "../../operative/operativeRelations.js";
 
 const entity = "category"
 
-const getCategories = async (req, res) =>{
+const getCategories__ = async (req, res) =>{
     try {
         const registros = await category.findAll({
         });
@@ -15,6 +15,65 @@ const getCategories = async (req, res) =>{
         handleHttpError(res, `No se pudo cargar ${entity} s` ); 
     }
 }
+
+
+const getCategories = async (req, res) => {
+    try {
+        const registros = await category.findAll({
+            include: [
+                {
+                    model: instructor,
+                    through: {
+                        attributes: [],
+                        where: { order: 1 } // Filtra solo el instructor principal
+                    },
+                    attributes: ['id', 'name', 'photo'],
+                    required: false // Para incluir categorías sin instructor principal
+                }
+            ]
+        });
+
+        // Procesar imágenes en paralelo
+        const registrosConInstructor = await Promise.all(
+            registros.map(async (categoria) => {
+                try {
+                    const categoriaJSON = categoria.toJSON();
+                    
+                    if (categoriaJSON.instructors && categoriaJSON.instructors.length > 0) {
+                        const instructorPrincipal = categoriaJSON.instructors[0];
+                        
+                        if (instructorPrincipal.photo) {
+                            const fotoPath = path.join(
+                                __dirname, 
+                                '..', 
+                                '..', 
+                                '..', 
+                                'public', 
+                                instructorPrincipal.photo
+                            );
+
+                            await fs.access(fotoPath);
+                            const imageBuffer = await fs.readFile(fotoPath);
+                            
+                            instructorPrincipal.photoBase64 = `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`;
+                        }
+                    }
+                    
+                    return categoriaJSON;
+                } catch (error) {
+                    console.error(`Error procesando categoría ${categoria.id}:`, error.message);
+                    return categoria.toJSON();
+                }
+            })
+        );
+
+        res.json(registrosConInstructor);
+    } catch (error) {
+        console.error("Error en getCategories:", error);
+        handleHttpError(res, `No se pudo cargar ${entity}s`);
+    }
+}
+
 
 const getActiveCategories = async (req, res) =>{
     try {
