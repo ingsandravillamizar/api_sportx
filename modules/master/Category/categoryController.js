@@ -98,7 +98,7 @@ const updateCategory_c = async (req, res) => {
     
     try {
         // Start a transaction for maintaining data integrity
-        transaction = await Sequelize.transaction();
+        transaction = await sequelize.transaction();
         
         const { id } = req.params;
         
