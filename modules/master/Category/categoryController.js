@@ -132,7 +132,7 @@ const updateCategory_c = async (req, res) => {
             if (instructors.length > 0) {
                 const instructorRelations = instructors.map(instructor => ({
                     categoryId: id,
-                    instructorId: instructor.id,
+                    instructorId: instructor.instructorId,
                     order: instructor.order || 0
                 }));
                 
