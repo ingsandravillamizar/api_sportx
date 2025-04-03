@@ -135,7 +135,8 @@ const updateCategory_c = async (req, res) => {
                 const instructorRelations = instructors.map(instructor => ({
                     categoryId: id,
                     instructorId: instructor.instructorId,
-                    order: instructor.order || 0
+                    order: instructor.order || 1,
+                    user: req.body.user 
                 }));
                 
                 console.log("Creating new relationships:", instructorRelations);
