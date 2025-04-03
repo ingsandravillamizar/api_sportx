@@ -1,6 +1,6 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-import { Sequelize, category } from "../masterRelations.js";
+import { sequelize, category } from "../masterRelations.js";
 import { categoryInstructor } from "../../operative/operativeRelations.js";
  
 

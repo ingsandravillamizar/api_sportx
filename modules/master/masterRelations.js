@@ -1,5 +1,5 @@
 
-import { sequelize } from "../../config/db.js";
+import db from "../../config/db.js";
 
 
 import position from "./position/position.js";
@@ -13,6 +13,10 @@ import club from "./club/club.js";
 import instructor from "./instructor/instructor.js";
 import company from "./Company/company.js";
 import season from "./season/season.js";
+
+
+
+const sequelize = db;
 
 
 /** La categoria de posiciones tienen muchas posiciones
