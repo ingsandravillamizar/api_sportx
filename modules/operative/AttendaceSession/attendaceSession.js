@@ -54,6 +54,16 @@ const attendanceDetail = db.define('attendance_details', {
         allowNull: false,
         defaultValue: false
     },
+
+    observation: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+    },
+    state:{
+        type: DataTypes.BOOLEAN, 
+        allowNull: false,
+        defaultValue: true 
+    },
     
     user: {
         type: DataTypes.STRING(50),

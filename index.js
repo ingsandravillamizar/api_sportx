@@ -64,7 +64,7 @@ app.use('/api_sportx/sessions', sessionsRoutes);
 
 
 
-// hola
+
 /***
  * Configurar puerto y levantar servidor
  */  
