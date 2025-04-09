@@ -14,7 +14,7 @@ const attendanceSession = db.define('attendance_sessions', {
         allowNull: false,
         defaultValue: DataTypes.NOW
     },
-    evidencePhoto: {
+    photo: {
         type: DataTypes.STRING(255),
         allowNull: true
     },

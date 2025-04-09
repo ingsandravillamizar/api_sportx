@@ -77,6 +77,67 @@ const getStudents = async (req, res) =>{
 }
 
 
+const getStudentsByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+
+        const registros = await student.findAll({
+            where: {
+                state: true,
+                categoryId: categoryId  // filtramos por categoría específica
+            },
+            include: [
+                {
+                    model: identificationType,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: category,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: club,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: position,
+                    attributes: ["id", "name"]
+                }
+            ]
+        });
+
+        const registrosConImagen = await Promise.all(
+            registros.map(async (estudiante) => {
+                try {
+                    const fotoPath = path.join(
+                        __dirname, '..', '..', '..', 'public', estudiante.photo
+                    );
+
+                    await fs.access(fotoPath);
+                    const imageBuffer = await fs.readFile(fotoPath);
+
+                    return {
+                        ...estudiante.toJSON(),
+                        photoBase64: `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`
+                    };
+                } catch (error) {
+                    console.error(`Error en estudiante ${estudiante.id}:`, error.message);
+                    return {
+                        ...estudiante.toJSON(),
+                        photoBase64: null
+                    };
+                }
+            })
+        );
+
+        res.json(registrosConImagen);
+    } catch (error) {
+        console.error("Error en getStudentsByCategory:", error);
+        handleHttpError(res, `No se pudieron obtener ${entity}s por categoría`);
+    }
+};
+
+
 const getStudent = async(req, res) => {
     try {
         req = matchedData(req)
@@ -211,6 +272,7 @@ const deleteStudent = async(req, res) =>{
 
 export{
     getStudents,
+    getStudentsByCategory,
     getStudent,
     createStudent,
     deleteStudent,

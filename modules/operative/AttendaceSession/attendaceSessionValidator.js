@@ -12,7 +12,7 @@ const validateCreateSession = [
         .isInt().withMessage("Debe ser un ID numérico"),
 
     // Foto de evidencia (opcional)
-    body("evidencePhoto")
+    body("photo")
         .optional()
         .isString().withMessage("Debe ser una ruta válida")
         .isLength({ max: 255 }).withMessage("Máximo 255 caracteres"),
