@@ -22,6 +22,11 @@ const attendanceSession = db.define('attendance_sessions', {
         type: DataTypes.TEXT,
         allowNull: true
     },
+    state:{
+        type: DataTypes.BOOLEAN, 
+        allowNull: false,
+        defaultValue: true 
+    },
 
     validated: {
         type: DataTypes.BOOLEAN,
@@ -54,17 +59,6 @@ const attendanceDetail = db.define('attendance_details', {
         allowNull: false,
         defaultValue: false
     },
-
-    observation: {
-        type: DataTypes.STRING(255),
-        allowNull: true
-    },
-    state:{
-        type: DataTypes.BOOLEAN, 
-        allowNull: false,
-        defaultValue: true 
-    },
-    
     user: {
         type: DataTypes.STRING(50),
         allowNull: false
