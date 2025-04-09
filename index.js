@@ -20,7 +20,7 @@ import companyRoutes from './modules/master/Company/companyRoutes.js'
 import instructorRoutes from './modules/master/instructor/instructorRoutes.js'
 import seasonsRoutes from './modules/master/season/seasonRoutes.js'
 import categoryInstructorRoutes from './modules/operative/CategoryInstructor/categoryInstructorRoutes.js'
-
+import sessionsRoutes from './modules/operative/AttendaceSession/attendaceSessionRoutes.js'
 
 /*** Crear app   */
 const app = express();
@@ -60,6 +60,7 @@ app.use('/api_sportx/companies', companyRoutes);
 app.use('/api_sportx/instructors', instructorRoutes);
 app.use('/api_sportx/seasons', seasonsRoutes);
 app.use('/api_sportx/categoryInstructors', categoryInstructorRoutes);
+app.use('/api_sportx/sessions', sessionsRoutes);
 
 
 
