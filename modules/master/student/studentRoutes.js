@@ -7,7 +7,7 @@ import upload from '../../../middleware/uploadFile.js';
 const router = express.Router();
 
 router.get('/', apiAuth, getStudents)
-router.get('/by-category/:categoryId',apiAuth, getStudentsByCategory);
+router.get('/category/:categoryId',apiAuth, getStudentsByCategory);
 router.get('/:id', apiAuth, validateGetStudent,  getStudent)
 
 
