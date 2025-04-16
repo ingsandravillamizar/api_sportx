@@ -93,20 +93,36 @@ const createSession = async (req, res) => {
     console.log('Cuerpo de la solicitud:', req.body);
     console.log('Archivos:', req.files);
 
-    
+
 
     let transaction;
     try {
         transaction = await db.transaction();
         const body = matchedData(req);
 
-        // 1. Crear sesión principal
+        //  1. Crear sesión principal con nombre temporal
         const newSession = await attendanceSession.create({
             ...body,
             evidencePhoto: req.file ? `/uploads/attendances/${req.file.filename}` : null,
         }, { transaction });
 
-        // 2. Crear detalles de asistencia si existen
+
+        // 2. Renombrar archivo con ID real
+        if (req.file) {
+            const newFilename = `attendance_${newSession.id}${path.extname(req.file.filename)}`;
+            const oldPath = path.join('./public/uploads/attendances', req.file.filename);
+            const newPath = path.join('./public/uploads/attendances', newFilename);
+
+            fs.renameSync(oldPath, newPath);
+
+            // Actualizar registro con nuevo nombre
+            await newSession.update({
+                evidencePhoto: `/uploads/attendances/${newFilename}`
+            }, { transaction });
+        }
+
+
+        // 3. Crear detalles de asistencia
         if (body.details && Array.isArray(body.details)) {
             const detailsData = body.details.map(detail => ({
                 sessionId: newSession.id,
@@ -120,7 +136,7 @@ const createSession = async (req, res) => {
 
         await transaction.commit();
         
-        // Obtener la sesión completa con sus detalles
+        // 4. Obtener sesión actualizada
         const fullSession = await attendanceSession.findByPk(newSession.id, {
             include: [attendanceDetail]
         });
@@ -128,8 +144,13 @@ const createSession = async (req, res) => {
         res.status(201).json(fullSession);
     } catch (error) {
         if (transaction) await transaction.rollback();
-        console.error(error);
-        handleHttpError(res, `No se pudo crear ${entity}`);
+        // Limpiar archivo temporal en caso de error
+        if (req.file?.path) {
+            fs.unlinkSync(req.file.path);
+        }
+
+        console.error('Error creating session:', error);
+        handleHttpError(res, `Error al crear: ${entity}`);
     }
 }
 

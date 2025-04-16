@@ -1,5 +1,9 @@
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
+
+const { v4: uuidv4 } = require('uuid');
+
 
 // Configuración base
 const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
@@ -44,8 +48,31 @@ const companyUpload = multer({
     limits: { fileSize: maxFileSize }
 });
 
+// const attendanceUpload = multer({
+    
+//     storage: createStorage('attendances', 'id', 'attendance'),
+//     fileFilter: (req, file, cb) => fileFilter(file, cb),
+//     limits: { fileSize: maxFileSize }
+// });
+
+
+
+const attendanceStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadPath = path.join('./public/uploads', 'attendances');
+        fs.mkdirSync(uploadPath, { recursive: true }); // Crea directorio si no existe
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        const tempId = uuidv4(); // Generar UUID temporal
+        req.tempFileId = tempId; // Guardar en el request para usar después
+        const ext = path.extname(file.originalname);
+        cb(null, `temp_${tempId}${ext}`); // Nombre temporal
+    }
+});
+
 const attendanceUpload = multer({
-    storage: createStorage('attendances', 'id', 'attendance'),
+    storage: attendanceStorage,
     fileFilter: (req, file, cb) => fileFilter(file, cb),
     limits: { fileSize: maxFileSize }
 });
