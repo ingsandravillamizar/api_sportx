@@ -87,6 +87,14 @@ const getSession = async(req, res) => {
 
 
 const createSession = async (req, res) => {
+
+
+    console.log('Recibido en el servidor:');
+    console.log('Cuerpo de la solicitud:', req.body);
+    console.log('Archivos:', req.files);
+
+    
+
     let transaction;
     try {
         transaction = await db.transaction();
