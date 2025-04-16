@@ -1,5 +1,5 @@
 import express from 'express';import { apiAuth } from '../../../auth/middleware/apiauth.js';
-import upload, { attendanceUpload } from '../../../middleware/uploadFile.js';
+import { attendanceUpload } from '../../../middleware/uploadFile.js';
 import { createSession, deleteSession, getSession, getSessions, updateSession } from './attendaceSessionController.js';
 import { validateCreateSession, validateGetSession, validateUpdateSession } from './attendaceSessionValidator.js';
 
