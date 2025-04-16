@@ -19,7 +19,7 @@ const createStorage = (entityType, idField = 'identification', prefix) => multer
         }
 
         const ext = path.extname(file.originalname).toLowerCase();
-        const fileName = `${prefix}_${entityId}${ext}`;
+        const fileName = `${entityId}${ext}`;
         
         cb(null, fileName);
     }
