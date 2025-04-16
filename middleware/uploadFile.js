@@ -1,48 +1,66 @@
-import multer from 'multer'
-import path from 'path'
+import multer from 'multer';
+import path from 'path';
 
-
-
-// Extensiones permitidas
+// Configuración base
 const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+const maxFileSize = 5 * 1024 * 1024; // 5MB
 
-
-const storage = multer.diskStorage({
-    destination: './public/uploads/',
-    filename: function(req, file, cb){
-        const studentId = req.body.identification; 
-        if (!studentId) {
-            return cb(new Error('Falta identificación del estudiante para el archivo'), null);
+// Función generadora de configuración de almacenamiento
+const createStorage = (entityType, idField = 'identification', prefix) => multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadPath = path.join('./public/uploads', entityType);
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        const entityId = req.body[idField];
+        
+        if (!entityId) {
+        return cb(new Error(`Falta el campo ${idField} para ${entityType}`), null);
         }
-        console.log("filename", file)
-        const fileName = `${studentId}${path.extname(file.originalname)}`;
 
+        const ext = path.extname(file.originalname).toLowerCase();
+        const fileName = `${prefix}_${entityId}${ext}`;
+        
         cb(null, fileName);
     }
-})
-// Filtro para validar tipos de archivo
-const fileFilter = (req, file, cb) => {
-    console.log("file",file)
-    const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif'];
+});
+
+// Middlewares específicos para cada entidad
+const studentUpload = multer({
+    storage: createStorage('students', 'identification', 'student'),
+    fileFilter: (req, file, cb) => fileFilter(file, cb),
+    limits: { fileSize: maxFileSize }
+});
+
+const instructorUpload = multer({
+    storage: createStorage('instructors', 'identification', 'instructor'),
+    fileFilter: (req, file, cb) => fileFilter(file, cb),
+    limits: { fileSize: maxFileSize }
+});
+
+const companyUpload = multer({
+    storage: createStorage('companies', 'identification', 'company'),
+    fileFilter: (req, file, cb) => fileFilter(file, cb),
+    limits: { fileSize: maxFileSize }
+});
+
+const attendanceUpload = multer({
+    storage: createStorage('attendances', 'id', 'attendance'),
+    fileFilter: (req, file, cb) => fileFilter(file, cb),
+    limits: { fileSize: maxFileSize }
+});
+
+// Filtro de archivos reutilizable
+const fileFilter = (file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    if (allowedExtensions.includes(ext)) {
-        cb(null, true);
-    } else {
-        cb(new Error('Formato de archivo no válido'), false);
-    }
+    allowedExtensions.includes(ext) 
+        ? cb(null, true) 
+        : cb(new Error('Formato de archivo no válido. Solo se permiten: ' + allowedExtensions.join(', ')), false);
 };
 
-
-const upload = multer({
-    storage,
-    fileFilter,
-    limits: {
-      fileSize: 5 * 1024 * 1024 // Límite de 5MB
-    }
-})
-
-export default upload
-
-
-
-
+export {
+    studentUpload,
+    instructorUpload,
+    companyUpload,
+    attendanceUpload
+};

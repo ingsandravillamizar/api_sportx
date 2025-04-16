@@ -54,7 +54,7 @@ const createCompany = async (req, res) => {
         const body = matchedData(req)
 
         // Verificar si hay un archivo de imagen y obtener su ruta
-        const logoPath = req.file ? `/uploads/${req.file.filename}` : null;
+        const logoPath = req.file ? `/uploads/companies/${req.file.filename}` : null;
 
         const response = await company.create({
             ...body,
@@ -77,7 +77,7 @@ const updateCompany = async (req, res) => {
 
         // Verificar si hay un archivo de imagen nuevo y obtener su ruta
         if (req.file) {
-            body.logo = `/uploads/${req.file.filename}`;
+            body.logo = `/uploads/companies/${req.file.filename}`;
         }
 
 

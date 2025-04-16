@@ -95,7 +95,7 @@ const createSession = async (req, res) => {
         // 1. Crear sesión principal
         const newSession = await attendanceSession.create({
             ...body,
-            evidencePhoto: req.file ? `/uploads/${req.file.filename}` : null,
+            evidencePhoto: req.file ? `/uploads/attendances/${req.file.filename}` : null,
         }, { transaction });
 
         // 2. Crear detalles de asistencia si existen

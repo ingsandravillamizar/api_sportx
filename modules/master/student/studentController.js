@@ -193,7 +193,7 @@ const createStudent = async (req, res) => {
         const body = matchedData(req)
 
         // Verificar si hay un archivo de imagen y obtener su ruta
-        const photoPath = req.file ? `/uploads/${req.file.filename}` : null;
+        const photoPath = req.file ? `/uploads/students/${req.file.filename}` : null;
 
         const response = await student.create({
             ...body,
@@ -221,7 +221,7 @@ const updateStudent = async (req, res) => {
 
         // Verificar si hay un archivo de imagen nuevo y obtener su ruta
         if (req.file) {
-            body.photo = `/uploads/${req.file.filename}`;
+            body.photo = `/uploads/students/${req.file.filename}`;
         }
         
 
