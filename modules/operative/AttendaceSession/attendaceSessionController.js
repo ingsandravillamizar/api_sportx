@@ -152,10 +152,10 @@ const createSession = async (req, res) => {
 
         // 4. Crear detalles de asistencia
 
-        await attendanceDetail.destroy({
-            where: { sessionId: newSession.id, },
-            transaction
-        });
+        // await attendanceDetail.destroy({
+        //     where: { sessionId: newSession.id, },
+        //     transaction
+        // });
 
 
         const detailsData = body.details.map(detail => ({
