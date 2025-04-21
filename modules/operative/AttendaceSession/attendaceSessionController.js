@@ -100,7 +100,7 @@ const createSession = async (req, res) => {
 
     let transaction;
     try {
-        transaction = await db.transaction();
+        transaction = await sequelize.transaction();
         const body = req.body;
 
 
