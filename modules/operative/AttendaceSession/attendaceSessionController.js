@@ -128,6 +128,8 @@ const createSession = async (req, res) => {
         const newSession = await attendanceSession.create({
             ...body,
             photo: req.file ? `/uploads/attendances/${req.file.filename}` : null,
+            user: body.user, 
+            userMod: body.user, 
         }, { transaction });
 
 
