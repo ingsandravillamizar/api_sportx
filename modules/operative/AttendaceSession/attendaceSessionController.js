@@ -114,7 +114,6 @@ const createSession = async (req, res) => {
                     }
                 }
         
-        // 2. Validar estructura de details antes de crear
             if (!Array.isArray(body.details) || !body.details.every(d => 
                     typeof d.studentId === 'number' && 
                     typeof d.attended === 'boolean'
@@ -124,7 +123,7 @@ const createSession = async (req, res) => {
 
 
 
-        //  1. Crear sesión principal con nombre temporal
+        //  2. Crear sesión principal con nombre temporal
         const newSession = await attendanceSession.create({
             ...body,
             photo: req.file ? `/uploads/attendances/${req.file.filename}` : null,
@@ -133,7 +132,7 @@ const createSession = async (req, res) => {
         }, { transaction });
 
 
-        // 2. Renombrar archivo con ID real
+        // 3. Renombrar archivo con ID real
         if (req.file) {
             const newFilename = `attendance_${newSession.id}${path.extname(req.file.filename)}`;
             const oldPath = path.join('./public/uploads/attendances', req.file.filename);
@@ -148,7 +147,7 @@ const createSession = async (req, res) => {
         }
 
 
-        // 3. Crear detalles de asistencia
+        // 4. Crear detalles de asistencia
         const detailsData = body.details.map(detail => ({
             sessionId: newSession.id,
             studentId: detail.studentId,
@@ -158,9 +157,11 @@ const createSession = async (req, res) => {
         }));
 
         await attendanceDetail.bulkCreate(detailsData, { transaction });
+
+        // 5. Confirmar transacción ANTES de operaciones no relacionadas
         await transaction.commit();
         
-        // 4. Obtener sesión actualizada
+       // 6. Obtener datos actualizados FUERA de la transacción
         const fullSession = await attendanceSession.findByPk(newSession.id, {
             include: [{
                 model: attendanceDetail,
