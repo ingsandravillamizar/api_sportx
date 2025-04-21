@@ -1,10 +1,11 @@
 import { matchedData } from "express-validator";
 import { handleHttpError } from "../../../helpers/httperror.js";
-
+import fs from 'fs';
 import path from 'path'; 
-import { promises as fs } from 'fs'; 
+import { promises as fsPromises } from 'fs';
 import { fileURLToPath } from 'url';
 import { attendanceDetail, attendanceSession } from "./attendaceSession.js";
+
 
 const entity = "attendance_sessions"
 // Obtener __dirname equivalente en ES Modules
@@ -135,7 +136,7 @@ const createSession = async (req, res) => {
             const oldPath = path.join('./public/uploads/attendances', req.file.filename);
             const newPath = path.join('./public/uploads/attendances', newFilename);
 
-            fs.renameSync(oldPath, newPath);
+            await fsPromises.rename(oldPath, newPath);
 
             // Actualizar registro con nuevo nombre
             await newSession.update({
@@ -173,9 +174,13 @@ const createSession = async (req, res) => {
         if (transaction) await transaction.rollback();
         // Limpiar archivo temporal en caso de error
         if (req.file?.path) {
-            fs.unlinkSync(req.file.path);
+            try {
+                await fsPromises.unlink(req.file.path);
+            } catch (unlinkError) {
+                console.error('Error eliminando archivo temporal:', unlinkError);
+            }
         }
-
+    
         console.error('Error creating session:', error);
         handleHttpError(res, `Error al crear: ${entity}`);
     }
