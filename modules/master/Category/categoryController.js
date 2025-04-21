@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const entity = "category"
 
-const getCategories__ = async (req, res) =>{
+const getCategories = async (req, res) =>{
     try {
         const registros = await category.findAll({
         });
@@ -24,7 +24,7 @@ const getCategories__ = async (req, res) =>{
 }
 
 
-const getCategories = async (req, res) => {
+const getCategoriesByInstructor = async (req, res) => {
     try {
         const registros = await category.findAll({
             include: [
@@ -266,6 +266,7 @@ const deleteCategory = async(req, res) =>{
 
 export{
     getCategories,
+    getCategoriesByInstructor,
     getCategory,
     createCategory,
     deleteCategory,
