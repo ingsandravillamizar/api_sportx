@@ -2,7 +2,7 @@ import express from 'express';import { apiAuth } from '../../../auth/middleware/
 import { attendanceUpload } from '../../../middleware/uploadFile.js';
 import { createSession, deleteSession, getSession, getSessions, updateSession } from './attendaceSessionController.js';
 import { validateCreateSession, validateGetSession, validateUpdateSession } from './attendaceSessionValidator.js';
-import { parseFormData } from '../middlewares/formDataMiddleware.js';
+import { parseFormData } from '../../../middleware/parseFormData.js';
 
 
 const router = express.Router();
