@@ -1,5 +1,5 @@
 import express from 'express';import { apiAuth } from '../../../auth/middleware/apiauth.js';
-import { createCategory, updateCategory_c, deleteCategory, updateCategory, getCategories, getCategory, getCategoriesByInstructor } from './categoryController.js';
+import { createCategory, updateCategory_c, deleteCategory, updateCategory, getCategories, getCategory, getCategoriesByInstructor, getActiveCategories } from './categoryController.js';
 import { validateCreateCategory, validateGetCategory } from './categoryValidator.js';
 
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', apiAuth, getCategories)
 router.get('/with-instructors', apiAuth, getCategoriesByInstructor)
-
+router.get('/active', apiAuth, getActiveCategories)
 
 router.get('/:id', apiAuth, validateGetCategory,  getCategory)
 router.post('/create', apiAuth, validateCreateCategory, createCategory)
