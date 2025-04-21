@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.get('/', apiAuth, getSessions)
 router.get('/:id', apiAuth, validateGetSession,  getSession)
-router.post('/create', apiAuth,  attendanceUpload.single('image'), validateCreateSession,createSession)
-router.put('/:id', apiAuth,attendanceUpload.single('image'), validateUpdateSession,  updateSession)
+router.post('/create', apiAuth,  attendanceUpload.single('photo'), validateCreateSession,createSession)
+router.put('/:id', apiAuth,attendanceUpload.single('photo'), validateUpdateSession,  updateSession)
 router.delete('/delete/:id',  apiAuth, deleteSession)
 
 
