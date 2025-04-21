@@ -92,6 +92,8 @@ const createSession = async (req, res) => {
     console.log('Recibido en el servidor:');
     console.log('Cuerpo de la solicitud:', req.body);
     console.log('Archivos:', req.files);
+    console.log('Tipo de datos details:', typeof req.body.details);
+    console.log('Contenido details:', req.body.details);
 
 
 
@@ -166,7 +168,7 @@ const createSession = async (req, res) => {
             success: true,
             data: fullSession
         });
-        
+
     } catch (error) {
         if (transaction) await transaction.rollback();
         // Limpiar archivo temporal en caso de error
