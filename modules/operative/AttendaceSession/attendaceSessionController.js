@@ -100,10 +100,30 @@ const createSession = async (req, res) => {
         transaction = await db.transaction();
         const body = matchedData(req);
 
+
+        // 1. Parsear detalles si vienen como string (para FormData)
+            if (typeof body.details === 'string') {
+                try {
+                        body.details = JSON.parse(body.details);
+                    } catch (error) {
+                        throw new Error("Formato inválido en detalles de asistencia");
+                    }
+                }
+        
+        // 2. Validar estructura de details antes de crear
+            if (!Array.isArray(body.details) || !body.details.every(d => 
+                    typeof d.studentId === 'number' && 
+                    typeof d.attended === 'boolean'
+            )) {
+                throw new Error("Estructura de detalles inválida");
+            }
+
+
+
         //  1. Crear sesión principal con nombre temporal
         const newSession = await attendanceSession.create({
             ...body,
-            evidencePhoto: req.file ? `/uploads/attendances/${req.file.filename}` : null,
+            photo: req.file ? `/uploads/attendances/${req.file.filename}` : null,
         }, { transaction });
 
 
@@ -117,31 +137,36 @@ const createSession = async (req, res) => {
 
             // Actualizar registro con nuevo nombre
             await newSession.update({
-                evidencePhoto: `/uploads/attendances/${newFilename}`
+                photo: `/uploads/attendances/${newFilename}`
             }, { transaction });
         }
 
 
         // 3. Crear detalles de asistencia
-        if (body.details && Array.isArray(body.details)) {
-            const detailsData = body.details.map(detail => ({
-                sessionId: newSession.id,
-                studentId: detail.studentId,
-                attended: detail.attended,
-                manualCheck: true
-            }));
+        const detailsData = body.details.map(detail => ({
+            sessionId: newSession.id,
+            studentId: detail.studentId,
+            attended: detail.attended,
+            user: body.user,
+            userMod: body.user
+        }));
 
-            await attendanceDetail.bulkCreate(detailsData, { transaction });
-        }
-
+        await attendanceDetail.bulkCreate(detailsData, { transaction });
         await transaction.commit();
         
         // 4. Obtener sesión actualizada
         const fullSession = await attendanceSession.findByPk(newSession.id, {
-            include: [attendanceDetail]
+            include: [{
+                model: attendanceDetail,
+                as: 'attendanceDetails'
+            }]
         });
 
-        res.status(201).json(fullSession);
+        res.status(201).json({
+            success: true,
+            data: fullSession
+        });
+        
     } catch (error) {
         if (transaction) await transaction.rollback();
         // Limpiar archivo temporal en caso de error
