@@ -86,6 +86,10 @@ const fileFilter = (file, cb) => {
         : cb(new Error('Formato de archivo no válido. Solo se permiten: ' + allowedExtensions.join(', ')), false);
 };
 
+
+
+
+
 export {
     studentUpload,
     instructorUpload,

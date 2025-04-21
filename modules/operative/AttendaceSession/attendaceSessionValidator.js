@@ -25,19 +25,31 @@ const validateCreateSession = [
 
     // Detalles de asistencia
     body("details")
-        .exists().withMessage("Los detalles de asistencia son obligatorios")
-        .isArray({ min: 1 }).withMessage("Debe contener al menos un estudiante")
-        .custom((details) => {
-            return details.every(detail => {
-                return typeof detail.studentId === 'number' && 
-                       typeof detail.attended === 'boolean';
-            });
-        }).withMessage("Formato incorrecto en los detalles de asistencia"),
+    .exists().withMessage("Los detalles de asistencia son obligatorios")
+    .isArray({ min: 1 }).withMessage("Debe contener al menos un estudiante")
+    .custom((details) => {
+        return details.every(detail => {
+            // Más flexible con el tipo
+            const studentId = typeof detail.studentId === 'string' 
+                ? parseInt(detail.studentId, 10) 
+                : detail.studentId;
+            
+            const attended = typeof detail.attended === 'string'
+                ? detail.attended === 'true'
+                : detail.attended;
+                
+            return !isNaN(studentId) && typeof attended === 'boolean';
+        });
+    }).withMessage("Formato incorrecto en los detalles de asistencia"),
 
     // Validación manual
     body("details.*.studentId")
-        .exists().withMessage("ID de estudiante es obligatorio")
-        .isInt().withMessage("ID de estudiante debe ser numérico"),
+    .exists().withMessage("ID de estudiante es obligatorio")
+    .custom(value => {
+        // Acepta string o número
+        const id = typeof value === 'string' ? parseInt(value, 10) : value;
+        return !isNaN(id);
+    }).withMessage("ID de estudiante debe ser numérico"),
 
     body("details.*.attended")
         .exists().withMessage("Estado de asistencia es obligatorio")

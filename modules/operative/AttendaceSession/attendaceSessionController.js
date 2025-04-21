@@ -100,7 +100,7 @@ const createSession = async (req, res) => {
     let transaction;
     try {
         transaction = await db.transaction();
-        const body = matchedData(req);
+        const body = req.body;
 
 
         // 1. Parsear detalles si vienen como string (para FormData)
