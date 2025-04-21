@@ -153,7 +153,7 @@ const createSession = async (req, res) => {
         // 4. Crear detalles de asistencia
 
         await attendanceDetail.destroy({
-            where: { sessionId: id },
+            where: { sessionId: newSession.id, },
             transaction
         });
 
