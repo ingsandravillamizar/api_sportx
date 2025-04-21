@@ -174,7 +174,9 @@ const createSession = async (req, res) => {
         });
 
     } catch (error) {
-        if (transaction) await transaction.rollback();
+        if (transaction && !transaction.finished) {
+            await transaction.rollback();
+        }
         // Limpiar archivo temporal en caso de error
         if (req.file?.path) {
             try {
