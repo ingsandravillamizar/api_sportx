@@ -5,6 +5,7 @@ import path from 'path';
 import { promises as fsPromises } from 'fs';
 import { fileURLToPath } from 'url';
 import { attendanceDetail, attendanceSession } from "./attendaceSession.js";
+import { sequelize } from "../../master/masterRelations.js";
 
 
 const entity = "attendance_sessions"
