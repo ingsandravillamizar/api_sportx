@@ -90,7 +90,8 @@ attendanceSession.belongsTo(category, {
 
 attendanceSession.hasMany(attendanceDetail, {
     foreignKey: 'sessionId',
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
+    as: 'attendanceDetails' // Alias coherente
 });
 
 attendanceDetail.belongsTo(attendanceSession, {

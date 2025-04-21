@@ -100,6 +100,8 @@ const createSession = async (req, res) => {
 
 
     let transaction;
+    let isFileRenamed = false; // Bandera para rastrear si el archivo fue renombrado
+
     try {
         transaction = await sequelize.transaction();
         const body = req.body;
@@ -139,6 +141,7 @@ const createSession = async (req, res) => {
             const newPath = path.join('./public/uploads/attendances', newFilename);
 
             await fsPromises.rename(oldPath, newPath);
+            isFileRenamed = true; // Marcar como renombrado
 
             // Actualizar registro con nuevo nombre
             await newSession.update({
@@ -148,6 +151,13 @@ const createSession = async (req, res) => {
 
 
         // 4. Crear detalles de asistencia
+
+        await attendanceDetail.destroy({
+            where: { sessionId: id },
+            transaction
+        });
+
+
         const detailsData = body.details.map(detail => ({
             sessionId: newSession.id,
             studentId: detail.studentId,
@@ -179,7 +189,7 @@ const createSession = async (req, res) => {
             await transaction.rollback();
         }
         // Limpiar archivo temporal en caso de error
-        if (req.file?.path) {
+        if (req.file?.path && !isFileRenamed ) {
             try {
                 await fsPromises.unlink(req.file.path);
             } catch (unlinkError) {
