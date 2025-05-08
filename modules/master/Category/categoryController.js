@@ -58,14 +58,14 @@ const getCategoriesByInstructor = async (req, res) => {
                                 instructorPrincipal.photo
                             );
                             
-                            // Validar que el archivo existe
-                            await fs.access(fotoPath, fs.constants.F_OK);
+                            // // Validar que el archivo existe
+                            // await fs.access(fotoPath, fs.constants.F_OK);
                             
-                            // Leer y convertir a base64
-                            const imageBuffer = await fs.readFile(fotoPath);
-                            const extension = path.extname(fotoPath).replace('.', '');
+                            // // Leer y convertir a base64
+                            // const imageBuffer = await fs.readFile(fotoPath);
+                            // const extension = path.extname(fotoPath).replace('.', '');
                             
-                            instructorPrincipal.photoBase64 = `data:image/${extension};base64,${imageBuffer.toString('base64')}`;
+                            // instructorPrincipal.photoBase64 = `data:image/${extension};base64,${imageBuffer.toString('base64')}`;
                         }
                     } catch (error) {
                         console.error(`Error procesando imagen de instructor ${instructorPrincipal.id}:`, error.message);
