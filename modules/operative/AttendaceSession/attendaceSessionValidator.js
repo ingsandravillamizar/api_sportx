@@ -127,8 +127,24 @@ const validateGetSession = [
     }
 ];
 
+const validateGetLastSessionsByCategory = [
+    check('categoryId')
+        .exists().withMessage("ID de categoría es requerido")
+        .isInt().withMessage("ID de categoría debe ser numérico"),
+
+    (req, res, next) => {
+        try {
+            validationResult(req).throw();
+            return next();
+        } catch (error) {
+            res.status(400).json({ errors: error.array() });
+        }
+    }
+];
+
 export {
     validateCreateSession,
     validateUpdateSession,
-    validateGetSession
+    validateGetSession,
+    validateGetLastSessionsByCategory
 };

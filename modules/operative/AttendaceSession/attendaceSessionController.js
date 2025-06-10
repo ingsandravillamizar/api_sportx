@@ -285,10 +285,67 @@ const deleteSession = async(req, res) =>{
     }
 }
 
+const getLastSessionsByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        
+        const sessions = await attendanceSession.findAll({
+            where: {
+                categoryId,
+                state: true
+            },
+            order: [['sessionDate', 'DESC']],
+            limit: 15,
+            include: [{
+                model: attendanceDetail,
+                as: 'attendanceDetails'
+            }]
+        });
+
+        // Procesar imágenes en paralelo
+        const sessionsWithImages = await Promise.all(
+            sessions.map(async (session) => {
+                try {
+                    if (!session.photo) return session.toJSON();
+
+                    const fotoPath = path.join(
+                        __dirname, 
+                        '..', 
+                        '..', 
+                        '..', 
+                        'public', 
+                        session.photo
+                    );
+
+                    await fs.access(fotoPath);
+                    const imageBuffer = await fs.readFile(fotoPath);
+                    
+                    return {
+                        ...session.toJSON(),
+                        photoBase64: `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`
+                    };
+                } catch (error) {
+                    console.error(`Error procesando imagen para sesión ${session.id}:`, error.message);
+                    return {
+                        ...session.toJSON(),
+                        photoBase64: null
+                    };
+                }
+            })
+        );
+
+        res.json(sessionsWithImages);
+    } catch (error) {
+        console.error(`Error en getLastSessionsByCategory: ${entity}`, error);
+        handleHttpError(res, `No se pudieron cargar las últimas asistencias por categoría`);
+    }
+}
+
 export{
     getSessions,
     getSession,
     createSession,
     deleteSession,
-    updateSession
+    updateSession,
+    getLastSessionsByCategory
 }
