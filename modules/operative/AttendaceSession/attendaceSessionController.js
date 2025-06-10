@@ -318,6 +318,7 @@ const getLastSessionsByCategory = async (req, res) => {
                 sessionDate: session.sessionDate,
                 photo: session.photo,
                 observation: session.observation,
+                categoryId:  session.categoryId,
                 state: session.state,
                 attendanceCounts
             };
