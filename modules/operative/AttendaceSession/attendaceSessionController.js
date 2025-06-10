@@ -302,39 +302,28 @@ const getLastSessionsByCategory = async (req, res) => {
             }]
         });
 
-        // Procesar imágenes en paralelo
-        const sessionsWithImages = await Promise.all(
-            sessions.map(async (session) => {
-                try {
-                    if (!session.photo) return session.toJSON();
-
-                    const fotoPath = path.join(
-                        __dirname, 
-                        '..', 
-                        '..', 
-                        '..', 
-                        'public', 
-                        session.photo
-                    );
-
-                    await fs.access(fotoPath);
-                    const imageBuffer = await fs.readFile(fotoPath);
-                    
-                    return {
-                        ...session.toJSON(),
-                        photoBase64: `data:image/${path.extname(fotoPath).slice(1)};base64,${imageBuffer.toString('base64')}`
-                    };
-                } catch (error) {
-                    console.error(`Error procesando imagen para sesión ${session.id}:`, error.message);
-                    return {
-                        ...session.toJSON(),
-                        photoBase64: null
-                    };
+        // Transformar la respuesta para incluir solo los campos necesarios y el conteo
+        const simplifiedSessions = sessions.map(session => {
+            const attendanceCounts = session.attendanceDetails.reduce((acc, detail) => {
+                if (detail.attended) {
+                    acc.attended++;
+                } else {
+                    acc.missed++;
                 }
-            })
-        );
+                return acc;
+            }, { attended: 0, missed: 0 });
 
-        res.json(sessionsWithImages);
+            return {
+                id: session.id,
+                sessionDate: session.sessionDate,
+                photo: session.photo,
+                observation: session.observation,
+                state: session.state,
+                attendanceCounts
+            };
+        });
+
+        res.json(simplifiedSessions);
     } catch (error) {
         console.error(`Error en getLastSessionsByCategory: ${entity}`, error);
         handleHttpError(res, `No se pudieron cargar las últimas asistencias por categoría`);
